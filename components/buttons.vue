@@ -14,13 +14,13 @@
 
     </a>
 
+    <NuxtLink to="curriculumPage">
+      <button class="flex gap-1 text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
 
-      <button
-          @click="downloadImage"
-          class="flex gap-1 text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95"><NuxtImg src="curriculum.svg" width="20"/>
+          <NuxtImg src="curriculum.svg" width="20"/>
           {{text3}}
       </button>
-
+    </NuxtLink>
   </div>
 
 </template>

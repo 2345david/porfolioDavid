@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'border-b pb-4': isBorderVisible }" class="text-white bg-blue-900 bg-opacity-90 border-gray flex flex-row items-center justify-between pt-4 pr-5 pl-5 fixed top-0 start-0 w-full z-20 pb-4">
+  <div :class="{ 'border-b pb-4': isBorderVisible }" class="text-white bg-blue-900 bg-opacity-95 border-gray flex flex-row items-center justify-between pt-4 pr-5 pl-5 fixed top-0 start-0 w-full z-20 pb-4">
     <div class="flex items-center justify-center gap-2">
       <div>
         <NuxtImg :src="image"
@@ -26,6 +26,7 @@
               <span @click="scrollToSection('#sobre-mi')" class="hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text2}}</span>
               <span @click="scrollToSection('#habilidades')" class="hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text3}}</span>
               <span @click="scrollToSection('#proyectos')" class="hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text4}}</span>
+              <span @click="scrollToSection('#contactos')" class="hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text5}}</span>
 
             </div>
           </nav>
@@ -39,6 +40,7 @@
                 <span @click="scrollToSection('#sobre-mi')" class="hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text2}}</span>
                 <span @click="scrollToSection('#habilidades')" class="hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text3}}</span>
                 <span @click="scrollToSection('#proyectos')" class="hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text4}}</span>
+                <span @click="scrollToSection('#contactos')" class="hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text5}}</span>
               </div>
             </div>
           </div>
