@@ -1,21 +1,20 @@
 <template>
-
-  <div class="pt-20 pr-32 pl-32 bg-gray-200">
-    <div class="flex items-center justify-center pb-20 gap-4">
-      <button @click="downloadImage()" class="flex gap-1 text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
+  <div class="pt-20 px-4 sm:px-10 md:px-20 lg:px-32 bg-gray-200">
+    <div class="flex flex-col md:flex-row items-center justify-center pb-10 gap-4">
+      <button @click="downloadImage()" class="flex gap-1 text-[16px] md:text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
         Descargar CV
       </button>
       <NuxtLink to="/">
-        <button class="flex gap-1 text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
+        <button class="flex gap-1 text-[16px] md:text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
           Volver
         </button>
       </NuxtLink>
     </div>
-    <div class="flex gap-40">
-      <img src="/dav.png" alt="foto" class="bg-gray-200 "/>
-      <p class="flex items-center font-semibold text-[40px]">David Ramos García</p>
+    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-40">
+      <img src="/dav.png" alt="foto" class="w-32 h-32 md:w-auto md:h-auto bg-gray-200 rounded-full"/>
+      <p class="flex items-center font-semibold text-[24px] md:text-[40px]">David Ramos García</p>
     </div>
-    <div class="grid grid-cols-2 pt-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 pt-10 gap-6">
       <div class="flex flex-col">
 
         <div class="flex flex-col gap-4">
@@ -34,23 +33,23 @@
           </div>
         </div>
 
-        <div class="w-[500px]">
+        <div class="w-full md:w-[500px]">
           <hr class="border-black p-2">
         </div>
 
         <div class="flex flex-col pb-8">
-          <H1 class="text-xl p-2">Aptitudes</H1>
+          <h1 class="text-xl p-2">Aptitudes</h1>
           <p>
             Soy un chico con muchas ganas de<br>aprender, ordenador,
             cabezota en el<br>sentido de que hasta que no termine lo<br>
-            que empece no paro, putual,se<br>trabajar en equipo, estoy en constane<br>
+            que empece no paro, putual,se<br>trabajar en equipo, estoy en constante<br>
             aprendizaje ya que sigo estudiando por<br>cuenta propia, tengo ambición<br>
             profesional, se manejo de office(excel,<br>word, powerpoint), sobre todo el word<br>
             y soy resolverdor de problemas.
           </p>
         </div>
 
-        <div class="w-[500px]">
+        <div class="w-full md:w-[500px]">
           <hr class="border-black p-2">
         </div>
 
@@ -58,11 +57,11 @@
           <h1 class="text-xl p-2">Idiomas</h1>
           <p><b>Español, Valenciano</b><br>Idiomas nativos</p>
           <div class="flex flex-col pt-4">
-            <div class="flex gap-[420px]">
+            <div class="flex justify-between">
               <p class="flex pb-2">Ingles:</p>
               <p>A2</p>
             </div>
-            <div class="w-[500px] bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div class="w-full md:w-[500px] bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
               <div class="bg-blue-600 h-2.5 rounded-full" style="width: 35%"></div>
             </div>
             <p class="flex pt-2 pb-4">Basico</p>
@@ -95,12 +94,12 @@
 
         </div>
 
-        <div class="w-[500px] p-4">
+        <div class="w-full md:w-[500px] p-4">
           <hr class="border-black p-2">
         </div>
 
         <div class="flex flex-col gap-4 p-4">
-          <H1 class="text-xl">Historial Laboral</H1>
+          <h1 class="text-xl">Historial Laboral</h1>
 
           <div class="flex flex-col gap-2">
             <p><strong>Dependiente</strong></p>
@@ -114,9 +113,9 @@
             <p><strong>Top Group Express - Estudiante en prácticas</strong></p>
             <p class="flex gap-2">Coin, Málaga | 03/2024 - 06/2024</p>
             <p>
-              Lo que he echo en la empresa a sido aprender a poder manejarme
+              Lo que he hecho en la empresa ha sido aprender a poder manejarme
               con el tema del front-end, aprendiendo a programar mejor en
-              HTML y CSS,<br> ademas de aprender Nuxt, tailwind, JavaScript y Vitest.
+              HTML y CSS,<br> además de aprender Nuxt, Tailwind, JavaScript y Vitest.
             </p>
           </div>
         </div>
@@ -124,8 +123,6 @@
 
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -143,3 +140,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+  .w-full {
+    width: 100% !important;
+  }
+}
+</style>

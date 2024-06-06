@@ -1,6 +1,6 @@
 <template>
   <navbar
-    image="ordenador.svg"
+    image="laptop2.svg"
     text1="Inicio"
     text2="Sobre mi"
     text3="Habilidades"
@@ -40,7 +40,7 @@
         <img src="/globo.png" alt="globo" width="360px"/>
       </div>
       <div class="flex relative pl-24 pb-20 text-white">
-        <p>Titulación ESO <br> Modulo medio sistema <br> microinformatico y redes</p>
+        <p>Titulación ESO <br> SMR</p>
       </div>
 
       <div class="flex pt-[340px] items-center">
@@ -69,13 +69,13 @@
       <p id="habilidades"  class="flex justify-end text-[40px] pt-52 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700">Habilidades</p>
       <div class="grid grid-cols-2 p-6">
         <div class="flex flex-col gap-2">
-          <p class="flex text-[30px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Lenguajes</p>
+          <p class="flex items-center justify-center text-[30px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Lenguajes</p>
           <div class="flex pt-4">
             <img src="/pantalla.png" width="4000" alt="pantalla" />
           </div>
         </div>
         <div>
-          <p class="flex text-[30px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Otros</p>
+          <p class="flex text-[30px] items-center justify-center  bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Otros</p>
           <div class="flex pt-4">
             <img src="/pantallaOtros.png" width="4000" alt="pantalla" />
           </div>
