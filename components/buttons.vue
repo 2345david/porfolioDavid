@@ -1,6 +1,6 @@
 <template>
 
-  <div class="flex gap-6">
+  <div class="flex justify-center items-center gap-6">
 
     <a href="https://www.linkedin.com/in/david-ramos-garcia-a76686308/">
 

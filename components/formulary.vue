@@ -1,8 +1,8 @@
 <template>
-  <div class="pt-10 pb-10 grid grid-cols-2">
-    <div class="flex flex-col justify-center">
-      <p class="font-semibold text-[40px]">¿Quieres que hagamos <br> algun proyecto?</p>
-      <p class="font-medium text-[20px]">No dudes en contactarme</p>
+  <div class="pt-10 pb-10 grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
+    <div class="flex flex-col justify-center items-center gap-2">
+      <p class="font-semibold text-[30px] xl:text-[40px]">¿Quieres que hagamos <br> algun proyecto?</p>
+      <p class="font-medium text-[20px] pb-2">No dudes en contactarme</p>
     </div>
     <div class="bg-white rounded-md shadow-md p-6">
       <form action="https://formsubmit.co/57e4ef7bc7190c56e56c23dd260ab95f" method="post" class="space-y-4">

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex pt-5 bg-blue-900 p-4">
+  <div class="flex pt-5 bg-blue-900 p-4 justify-between">
     <p class="text-white">By Davurg 😎</p>
-    <div class="flex gap-4 items-center justify-between pl-[950px]">
+    <div class="flex gap-4 items-center ">
       <a href="https://www.instagram.com/davurg_06/">
         <NuxtImg src="instagram.svg" width="30"/>
       </a>
