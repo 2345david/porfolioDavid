@@ -38,13 +38,13 @@
         </div>
 
         <div class="flex flex-col pb-8">
-          <h1 class="text-xl p-2">Aptitudes</h1>
+          <h1 class="text-xl font-semibold">Aptitudes</h1>
           <p>
-            Soy un chico con muchas ganas de<br>aprender, ordenador,
+            Soy un chico con muchas ganas de<br>aprender, ordenado,
             cabezota en el<br>sentido de que hasta que no termine lo<br>
-            que empece no paro, putual,se<br>trabajar en equipo, estoy en constante<br>
+            que empecé no paro, puntual,se<br>trabajar en equipo, estoy en constante<br>
             aprendizaje ya que sigo estudiando por<br>cuenta propia, tengo ambición<br>
-            profesional, se manejo de office(excel,<br>word, powerpoint), sobre todo el word<br>
+            profesional, se manejar el office(excel,<br>word, powerpoint), sobre todo el word<br>
             y soy resolverdor de problemas.
           </p>
         </div>
@@ -54,17 +54,13 @@
         </div>
 
         <div>
-          <h1 class="text-xl p-2">Idiomas</h1>
+          <h1 class="text-xl font-semibold">Idiomas</h1>
           <p><b>Español, Valenciano</b><br>Idiomas nativos</p>
           <div class="flex flex-col pt-4">
-            <div class="flex justify-between">
+            <div class="flex gap-8">
               <p class="flex pb-2">Ingles:</p>
               <p>A2</p>
             </div>
-            <div class="w-full md:w-[500px] bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-              <div class="bg-blue-600 h-2.5 rounded-full" style="width: 35%"></div>
-            </div>
-            <p class="flex pt-2 pb-4">Basico</p>
           </div>
         </div>
       </div>
@@ -78,7 +74,7 @@
             <p>09/2019 - 06/2022</p>
           </div>
           <div class="flex flex-col gap-2">
-            <p><Strong>La ESO:</strong></p>
+            <p><Strong>Educacion secundaria obligatoria:</strong></p>
             <p>La ESO</p>
           </div>
 
@@ -89,7 +85,8 @@
           </div>
           <div class="flex flex-col gap-2">
             <p><strong>Sistema Microinformatico y redes:</strong></p>
-            <p>Curso de grado medio</p>
+            <p>Ciclo formativo de grado medio</p>
+            <p><strong>Carnet de manipulador de alimentos</strong></p>
           </div>
 
         </div>
@@ -102,11 +99,9 @@
           <h1 class="text-xl">Historial Laboral</h1>
 
           <div class="flex flex-col gap-2">
-            <p><strong>Dependiente</strong></p>
-            <p>El tentempie</p>
+            <p><strong>Dependiente - El tentempie</strong></p>
             <p>
               Reponedor de productos ademas de atención al cliente<br>
-              Tengo el carnet de manipulador de alimentos.
             </p>
           </div>
           <div class="flex flex-col gap-2">

@@ -7,9 +7,10 @@
       text4="Proyectos"
       text5="Contacto"
   />
-  <div class="pt-20 px-6 md:px-32 bg-blue-900 bg-opacity-30">
+
+  <div id="inicio" class="pt-20 px-6 md:px-32 bg-blue-900 bg-opacity-30">
     <section class="opacity-0 translate-y-20 transition-all duration-1000">
-      <div id="inicio" class="flex flex-col lg:flex-row gap-10 lg:gap-40 pt-44 justify-center items-center">
+      <div  class="flex flex-col-reverse lg:flex-row gap-10 lg:gap-40 h-full pt-28 justify-center items-center">
         <div class="flex flex-col w-full lg:w-[500px] gap-4 justify-center">
           <p>
             Me llamo David Ramos García, aunque me suelen llamar <b>Davu</b>. Soy un estudiante
@@ -31,14 +32,14 @@
     </section>
 
     <section id="sobre-mi" class="opacity-0 translate-y-20 transition-all duration-1000">
-      <div class="container mx-auto py-20 px-6 pt-72">
+      <div class="container h-full pt-36 ">
         <div class="text-center pb-16">
           <h2 class="text-4xl text-white font-bold text-gradient bg-gradient-to-r from-blue-800 via-blue-600 to-blue-800">Sobre mí</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="bg-white text-gray-800 shadow-lg rounded-lg p-8 transform hover:-translate-y-2 transition-transform">
             <h3 class="text-2xl font-semibold pb-4">Titulación</h3>
-            <p class="text-lg">ESO <br> SMR(Sistema microinformatico y redes)</p>
+            <p class="text-lg">ESO <br> Sistema microinformatico y redes</p>
           </div>
           <div class="bg-white text-gray-800 shadow-lg rounded-lg p-8 transform hover:-translate-y-2 transition-transform">
             <h3 class="text-2xl font-semibold pb-4">Algunos proyectos</h3>
@@ -53,7 +54,7 @@
     </section>
 
     <section class="opacity-0 translate-y-20 transition-all duration-1000">
-      <div class="flex flex-col pt-20">
+      <div class="flex flex-col h-full">
         <p id="habilidades" class="flex justify-end text-2xl md:text-3xl lg:text-[40px] pt-52 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700">Habilidades</p>
         <div class="grid grid-cols-1 md:grid-cols-2 p-6">
           <div class="flex flex-col gap-2">
@@ -73,7 +74,7 @@
     </section>
 
     <section class="opacity-0 translate-y-20 transition-all duration-1000">
-      <div id="proyectos" class="flex flex-col pt-40">
+      <div id="proyectos" class="flex flex-col h-full pt-36">
         <p class="flex text-2xl md:text-3xl lg:text-[40px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Proyectos</p>
         <p>Tengo unos cuantos proyectos pero son cosas algo sencillitas pero algo es algo, <b>pienso seguir avanzando</b></p>
       </div>
@@ -121,8 +122,8 @@
       </div>
     </section>
 
-    <section class="opacity-0 translate-y-20 transition-all duration-1000">
-      <div id="contactos" class="flex flex-col pt-52">
+    <section id="contactos" class="opacity-0 translate-y-20 transition-all duration-1000">
+      <div  class="flex flex-col h-full pt-36">
         <p class="flex text-2xl bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Contactame</p>
         <div>
           <formulary />
