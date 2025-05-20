@@ -22,6 +22,7 @@
               text="Linkelin"
               text2="Github"
               text3="Curriculum"
+              text4="Infojobs"
           />
         </div>
         <div class="flex flex-col gap-6 lg:gap-20 justify-center items-center">

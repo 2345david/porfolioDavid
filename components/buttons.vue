@@ -14,6 +14,12 @@
 
     </a>
 
+    <a href="https://www.infojobs.net/candidate/cv/view/index.xhtml?dgv=3986392983853922276">
+
+      <button class="flex items-center gap-1 text-[18px] bg-yellow-600 px-4 py-1.5 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95"><NuxtImg src="infojobs.png" width="25"/> {{text4}}</button>
+
+    </a>
+
     <NuxtLink to="curriculumPage">
       <button class="flex gap-1 text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
 
@@ -38,6 +44,10 @@ export default {
       default: ""
     },
     text3:{
+      type: String,
+      default: ""
+    },
+    text4:{
       type: String,
       default: ""
     }
