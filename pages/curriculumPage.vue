@@ -89,6 +89,16 @@
             <p><strong>Carnet de manipulador de alimentos</strong></p>
           </div>
 
+          <div class="flex gap-2">
+            <p><Strong>Ies Montecillos</Strong></p>
+            <p>|</p>
+            <p>09/2024 - sigo cursando</p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p><strong>Desarrollo de aplicaciones multiplataformas web:</strong></p>
+            <p>Ciclo formativo de grado superior</p>
+          </div>
+
         </div>
 
         <div class="w-full md:w-[500px] p-4">
@@ -113,6 +123,20 @@
               HTML y CSS,<br> además de aprender Nuxt, Tailwind, JavaScript y Vitest.
             </p>
           </div>
+          <div class="flex flex-col gap-2">
+            <p><strong>El atun -  camarero</strong></p>
+            <p class="flex gap-2">Coin, Málaga | 06/2024 - 09/2024</p>
+            <p>
+              He sido camarero y ayudante de cocina
+            </p>
+          </div>
+          <div class="flex flex-col gap-2">
+            <p><strong>El joomara</strong></p>
+            <p class="flex gap-2">Coin, Málaga | 09/2024 - sigo actualmente</p>
+            <p>
+              Soy camarero
+            </p>
+          </div>
         </div>
       </div>
 
@@ -126,8 +150,8 @@ export default {
   methods: {
     downloadImage() {
       const link = document.createElement('a');
-      link.href = '/myCurriculum.png';
-      link.download = 'myCurriculum.png';
+      link.href = '/myCurriculum.jpg';
+      link.download = 'myCurriculum.jpg';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

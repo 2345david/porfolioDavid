@@ -13,7 +13,7 @@
       <div  class="flex flex-col-reverse lg:flex-row gap-10 lg:gap-40 h-full pt-28 justify-center items-center">
         <div class="flex flex-col w-full lg:w-[500px] gap-4 justify-center">
           <p>
-            Me llamo David Ramos García, aunque me suelen llamar <b>Davu</b>. Soy un estudiante
+            Me llamo David Ramos García, aunque me suelen llamar <b>Davurg</b>. Soy un estudiante
             apasionado por la ciberseguridad, pero, actualmente tengo conocimientos del <b>Frontend</b>.
             Con ganas de <b>aprender</b> y dedicarme a lo que me <b>apasiona</b>.
           </p>
@@ -26,7 +26,7 @@
         </div>
         <div class="flex flex-col gap-6 lg:gap-20 justify-center items-center">
           <img src="/david.png" alt="david" class="w-36 md:w-48 lg:w-60" />
-          <p class="flex font-mono font-semibold text-2xl md:text-3xl lg:text-[40px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900">Futuro Analista <br> de seguridad</p>
+          <p class="flex font-mono font-semibold text-2xl md:text-3xl lg:text-[40px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-600 to-blue-900">Futuro programador <br> profesional</p>
         </div>
       </div>
     </section>
