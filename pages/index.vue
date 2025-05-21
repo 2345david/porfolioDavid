@@ -54,56 +54,55 @@
       </div>
     </section>
 
-    <section class="opacity-0 translate-y-20 transition-all duration-1000">
+<!-- HABILIDADES -->
+<section class="opacity-0 translate-y-20 transition-all duration-1000">
   <div class="flex flex-col h-full">
-    <!-- Título general -->
-    <p id="habilidades" class="flex justify-end text-2xl md:text-3xl lg:text-[40px] pt-52 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700">
+    <!-- Título -->
+    <p id="habilidades" class="flex justify-end text-2xl md:text-3xl lg:text-[40px] pt-20 px-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700">
       Habilidades
     </p>
 
-    <!-- Grid de secciones -->
-    <div class="grid grid-cols-1 md:grid-cols-2 p-6">
-      
-      <!-- Sección Lenguajes -->
-      <div class="flex flex-col gap-4 min-h-screen justify-center items-center bg-blue-100">
-        <p class="text-2xl md:text-3xl lg:text-[30px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">
-          Lenguajes
-        </p>
-        <div class="relative w-[800px] h-[600px]">
-          <img src="/pantalla.png" alt="Pantalla" class="w-full h-full object-contain" />
+    <!-- Contenido -->
+    <div class="grid grid-cols-1 xl:grid-cols-2 p-6 gap-10">
+      <!-- Lenguajes -->
+    <div class="flex flex-col gap-6 justify-center items-center bg-blue-100 rounded-xl p-4">
+  <p class="text-xl md:text-2xl lg:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">
+    Lenguajes
+  </p>
+  <div class="relative w-full aspect-[4/3] max-w-[800px] lg:max-w-[800px] xl:max-w-[1100px] 2xl:max-w-[1200px]">
+    <img src="/pantalla.png" alt="Pantalla" class="w-full h-full object-contain" />
+    <!-- Logos -->
+    <img src="/html.svg" alt="HTML" class="absolute w-10 lg:w-16 top-[15%] left-[20%]" />
+    <img src="/css.svg" alt="CSS" class="absolute w-10 lg:w-16 top-[15%] left-[45%]" />
+    <img src="/javaScript.svg" alt="JS" class="absolute w-10 lg:w-16 top-[15%] left-[70%]" />
+    <img src="/nuxt.svg" alt="Nuxt" class="absolute w-10 lg:w-16 top-[35%] left-[20%]" />
+    <img src="/tailwind.svg" alt="Tailwind" class="absolute w-10 lg:w-16 top-[35%] left-[45%]" />
+    <img src="/mysql.svg" alt="MySQL" class="absolute w-10 lg:w-16 top-[35%] left-[70%]" />
+    <img src="/java.svg" alt="Java" class="absolute w-10 lg:w-16 top-[52%] left-[20%]" />
+  </div>
+</div>
 
-          <img src="/html.svg" alt="HTML" class="absolute w-20 top-[15%] left-[20%]" />
-          <img src="/css.svg" alt="CSS" class="absolute w-20 top-[15%] left-[45%]" />
-          <img src="/javaScript.svg" alt="JavaScript" class="absolute w-20 bottom-[50%] left-[45%]" />
-          <img src="/nuxt.svg" alt="Nuxt" class="absolute w-20 top-[15%] right-[25%]" />
-          <img src="/tailwind.svg" alt="Tailwind" class="absolute w-20 bottom-[50%] left-[20%]" />
-          <img src="/mysql.svg" alt="MySQL" class="absolute w-20 bottom-[32%] right-[70%]" />
-          <img src="/java.svg" alt="Java" class="absolute w-20 bottom-[50%] right-[25%]" />
-        </div>
-      </div>
-
-      <!-- Sección Otros -->
-      <div class="flex flex-col gap-4 min-h-screen justify-center items-center bg-blue-100">
-        <p class="text-2xl md:text-3xl lg:text-[30px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">
-          Otros
-        </p>
-        <div class="relative w-[800px] h-[600px]">
-          <img src="/pantalla.png" alt="Pantalla" class="w-full h-full object-contain" />
-
-          <img src="/office.svg" alt="Office" class="absolute w-20 top-[15%] left-[20%]" />
-          <img src="/github.svg" alt="GitHub" class="absolute w-20 top-[15%] left-[45%]" />
-          <img src="/cloudflare.svg" alt="Cloudflare" class="absolute w-20 bottom-[50%] left-[45%]" />
-          <img src="/gimp.svg" alt="Gimp" class="absolute w-20 top-[15%] right-[25%]" />
-          <img src="/windows.svg" alt="Windows" class="absolute w-20 bottom-[50%] left-[20%]" />
-          <img src="/linux.svg" alt="Linux" class="absolute w-20 bottom-[32%] right-[70%]" />
-          <img src="/intellij.svg" alt="IntelliJ" class="absolute w-20 bottom-[50%] right-[25%]" />
-          <img src="/visualStudio.svg" alt="Visual Studio" class="absolute w-20 bottom-[32%] right-[45%]" />
-        </div>
-      </div>
-
+<!-- Otros -->
+<div class="flex flex-col gap-6 justify-center items-center bg-blue-100 rounded-xl p-4">
+  <p class="text-xl md:text-2xl lg:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">
+    Otros
+  </p>
+  <div class="relative w-full aspect-[4/3] max-w-[700px] lg:max-w-[850px] xl:max-w-[1600px] 2xl:max-w-[1650px]">
+    <img src="/pantalla.png" alt="Pantalla" class="w-full h-full object-contain" />
+    <!-- Logos -->
+    <img src="/office.svg" alt="Office" class="absolute w-10 lg:w-14 top-[15%] left-[20%]" />
+    <img src="/visualStudio.svg" alt="VS" class="absolute w-10 lg:w-14 top-[15%] left-[45%]" />
+    <img src="/gimp.svg" alt="Gimp" class="absolute w-10 lg:w-14 top-[15%] left-[70%]" />
+    <img src="/Windows.svg" alt="Windows" class="absolute w-10 lg:w-14 top-[40%] left-[20%]" />
+    <img src="/Linux.svg" alt="Linux" class="absolute w-10 lg:w-14 top-[40%] left-[45%]" />
+    <img src="/cloudflare.svg" alt="Cloudflare" class="absolute w-10 lg:w-14 top-[40%] left-[70%]" />
+    <img src="/intellij.svg" alt="IntelliJ" class="absolute w-10 lg:w-14 top-[55%] left-[21%]" />
+  </div>
+</div>
     </div>
   </div>
 </section>
+
 
 
     <section class="opacity-0 translate-y-20 transition-all duration-1000">
