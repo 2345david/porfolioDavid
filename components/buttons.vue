@@ -2,19 +2,19 @@
 
   <div class="flex justify-center items-center gap-6">
 
-    <a href="https://www.linkedin.com/in/david-ramos-garcia-a76686308/">
+    <a href="https://www.linkedin.com/in/david-ramos-garcia-a76686308/" target="_blank" rel="noopener noreferrer">
 
         <button class="flex justify-center items-center gap-1 text-[18px] bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95"><NuxtImg src="linkedin.svg" width="30"/> {{text}}</button>
 
     </a>
 
-    <a href="https://github.com/2345david">
+    <a href="https://github.com/2345david" target="_blank" rel="noopener noreferrer">
 
       <button class="flex items-center gap-1 text-[18px] bg-yellow-600 px-4 py-1.5 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95"><NuxtImg src="github.svg" width="25"/> {{text2}}</button>
 
     </a>
 
-    <a href="https://www.infojobs.net/candidate/cv/view/index.xhtml?dgv=3986392983853922276">
+    <a href="https://www.infojobs.net/candidate/cv/view/index.xhtml?dgv=3986392983853922276" target="_blank" rel="noopener noreferrer">
 
       <button class="flex items-center gap-1 text-[18px] bg-yellow-600 px-4 py-1.5 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95"><NuxtImg src="infojobs.png" width="25"/> {{text4}}</button>
 
