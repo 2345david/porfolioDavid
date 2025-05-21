@@ -67,7 +67,7 @@
           <div>
             <p class="flex text-2xl md:text-3xl lg:text-[30px] items-center justify-center bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Otros</p>
             <div class="flex pt-4">
-              <img src="/pantallaOtros .png" class="w-full" alt="pantalla" />
+              <img src="/pantallaOtros.png" class="w-full" alt="pantalla" />
             </div>
           </div>
         </div>
