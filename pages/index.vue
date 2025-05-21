@@ -11,7 +11,7 @@
   <div id="inicio" class="pt-20 px-6 md:px-32 bg-blue-900 bg-opacity-30">
     <section class="opacity-0 translate-y-20 transition-all duration-1000">
       <div  class="flex flex-col-reverse lg:flex-row gap-10 lg:gap-40 h-full pt-28 justify-center items-center">
-        <div class="flex flex-col w-full lg:w-[800px] gap-4 justify-center">
+        <div class="flex flex-col w-full lg:w-[1000px] gap-4 justify-center">
           <p>
             Me llamo David Ramos García, aunque me suelen llamar <b>Davurg</b>. Soy un estudiante
             apasionado por la ciberseguridad, pero, actualmente tengo conocimientos del <b>Frontend</b>.
@@ -54,56 +54,25 @@
       </div>
     </section>
 
-<!-- HABILIDADES -->
-<section class="opacity-0 translate-y-20 transition-all duration-1000">
-  <div class="flex flex-col h-full">
-    <!-- Título -->
-    <p id="habilidades" class="flex justify-end text-2xl md:text-3xl lg:text-[40px] pt-20 px-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700">
-      Habilidades
-    </p>
-
-    <!-- Contenido -->
-    <div class="grid grid-cols-1 xl:grid-cols-2 p-6 gap-10">
-      <!-- Lenguajes -->
-    <div class="flex flex-col gap-6 justify-center items-center bg-blue-100 rounded-xl p-4">
-  <p class="text-xl md:text-2xl lg:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">
-    Lenguajes
-  </p>
-  <div class="relative w-full aspect-[4/3] max-w-[800px] lg:max-w-[800px] xl:max-w-[1100px] 2xl:max-w-[1200px]">
-    <img src="/pantalla.png" alt="Pantalla" class="w-full h-full object-contain" />
-    <!-- Logos -->
-    <img src="/html.svg" alt="HTML" class="absolute w-10 lg:w-16 top-[15%] left-[20%]" />
-    <img src="/css.svg" alt="CSS" class="absolute w-10 lg:w-16 top-[15%] left-[45%]" />
-    <img src="/javaScript.svg" alt="JS" class="absolute w-10 lg:w-16 top-[15%] left-[70%]" />
-    <img src="/nuxt.svg" alt="Nuxt" class="absolute w-10 lg:w-16 top-[35%] left-[20%]" />
-    <img src="/tailwind.svg" alt="Tailwind" class="absolute w-10 lg:w-16 top-[35%] left-[45%]" />
-    <img src="/mysql.svg" alt="MySQL" class="absolute w-10 lg:w-16 top-[35%] left-[70%]" />
-    <img src="/java.svg" alt="Java" class="absolute w-10 lg:w-16 top-[52%] left-[20%]" />
-  </div>
-</div>
-
-<!-- Otros -->
-<div class="flex flex-col gap-6 justify-center items-center bg-blue-100 rounded-xl p-4">
-  <p class="text-xl md:text-2xl lg:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">
-    Otros
-  </p>
-  <div class="relative w-full aspect-[4/3] max-w-[700px] lg:max-w-[850px] xl:max-w-[1600px] 2xl:max-w-[1650px]">
-    <img src="/pantalla.png" alt="Pantalla" class="w-full h-full object-contain" />
-    <!-- Logos -->
-    <img src="/office.svg" alt="Office" class="absolute w-10 lg:w-14 top-[15%] left-[20%]" />
-    <img src="/visualStudio.svg" alt="VS" class="absolute w-10 lg:w-14 top-[15%] left-[45%]" />
-    <img src="/gimp.svg" alt="Gimp" class="absolute w-10 lg:w-14 top-[15%] left-[70%]" />
-    <img src="/Windows.svg" alt="Windows" class="absolute w-10 lg:w-14 top-[40%] left-[20%]" />
-    <img src="/Linux.svg" alt="Linux" class="absolute w-10 lg:w-14 top-[40%] left-[45%]" />
-    <img src="/cloudflare.svg" alt="Cloudflare" class="absolute w-10 lg:w-14 top-[40%] left-[70%]" />
-    <img src="/intellij.svg" alt="IntelliJ" class="absolute w-10 lg:w-14 top-[55%] left-[21%]" />
-  </div>
-</div>
-    </div>
-  </div>
-</section>
-
-
+    <section class="opacity-0 translate-y-20 transition-all duration-1000">
+      <div class="flex flex-col h-full">
+        <p id="habilidades" class="flex justify-end text-2xl md:text-3xl lg:text-[40px] pt-52 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-400 to-blue-700">Habilidades</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 p-6">
+          <div class="flex flex-col gap-2">
+            <p class="flex items-center justify-center text-2xl md:text-3xl lg:text-[30px] bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Lenguajes</p>
+            <div class="flex pt-4">
+              <img src="/pantallaLenguajes.png" class="w-full" alt="pantalla" />
+            </div>
+          </div>
+          <div>
+            <p class="flex text-2xl md:text-3xl lg:text-[30px] items-center justify-center bg-clip-text text-transparent bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900">Otros</p>
+            <div class="flex pt-4">
+              <img src="/pantallaOtros .png" class="w-full" alt="pantalla" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="opacity-0 translate-y-20 transition-all duration-1000">
       <div id="proyectos" class="flex flex-col h-full pt-36">
