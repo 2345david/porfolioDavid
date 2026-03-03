@@ -40,15 +40,15 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="bg-white text-gray-800 shadow-lg rounded-lg p-8 transform hover:-translate-y-2 transition-transform">
             <h3 class="text-2xl font-semibold pb-4">Titulación</h3>
-            <p class="text-lg">ESO <br> Sistema microinformatico y redes</p>
+            <p class="text-lg">ESO <br> Sistema microinformatico y redes <br> Desarrollo de aplicaciones multiplataformas</p>
           </div>
           <div class="bg-white text-gray-800 shadow-lg rounded-lg p-8 transform hover:-translate-y-2 transition-transform">
             <h3 class="text-2xl font-semibold pb-4">Algunos proyectos</h3>
-            <p class="text-lg">Los proyectos que tengo son echos en mi epoca de FCT, pero pienso hacer proyectos mas grandes</p>
+            <p class="text-lg">Los proyectos que tengo son echos en mi epoca de FCT y por cuenta propia, pero pienso hacer proyectos mas grandes</p>
           </div>
           <div class="bg-white text-gray-800 shadow-lg rounded-lg p-8 transform hover:-translate-y-2 transition-transform">
             <h3 class="text-2xl font-semibold pb-4">Manejo de tecnologías</h3>
-            <p class="text-lg">Manejo de aplicaciones ofimaticas, edicion de imagenes y videos y mas</p>
+            <p class="text-lg">Manejo de aplicaciones ofimaticas, edicion de imagenes, videos y mas</p>
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
         </div>
         <div class="flex flex-col gap-2">
           <p class="text-lg md:text-xl">Hice una calculadora con HTML, CSS y Javascript</p>
-          <a href="https://github.com/2345david/calculadora">
+          <a target="_blank" href="https://github.com/2345david/calculadora">
             <button class="flex justify-center items-center gap-1 text-base md:text-lg bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">VER</button>
           </a>
         </div>
@@ -101,11 +101,12 @@
         </div>
         <div class="flex flex-col gap-2">
           <p class="text-lg md:text-xl">Hice una app web para poder añadir tareas y tener una lista de tareas<br>Lo hice con Nuxt, Tailwind y Javascript</p>
-          <a href="https://github.com/2345david/taskList">
+          <a target="_blank" href="https://github.com/2345david/taskList">
             <button class="flex justify-center items-center gap-1 text-base md:text-lg bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">VER</button>
           </a>
         </div>
       </div>
+
       <div class="pt-8">
         <hr class="border-black">
       </div>
@@ -116,12 +117,31 @@
         </div>
         <div class="flex flex-col gap-2">
           <p class="text-lg md:text-xl">Hice el juego tres en rayas, y está hecho en HTML, CSS y Javascript</p>
-          <a href="https://github.com/2345david/tres-en-raya">
+          <a target="_blank" href="https://github.com/2345david/tres-en-raya">
             <button class="flex justify-center items-center gap-1 text-base md:text-lg bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">VER</button>
           </a>
         </div>
       </div>
+
+      <div class="pt-8">
+        <hr class="border-black">
+    </div>
+
+    <div class="flex flex-col lg:flex-row items-center pt-8 gap-10">
+        <div>
+          <img src="/webVTC.jpeg" alt="lista de tareas" class="w-36 md:w-48 lg:w-60" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <p class="text-lg md:text-xl">Hice una pagina web a una empresa de transporte VTC, con Nuxt y Tailwind</p>
+          <a target="_blank" href="https://malagatranfercouk.com/">
+            <button class="flex justify-center items-center gap-1 text-base md:text-lg bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">VER</button>
+          </a>
+        </div>
+      </div>
+
     </section>
+
+    
 
     <section id="contactos" class="opacity-0 translate-y-20 transition-all duration-1000">
       <div  class="flex flex-col h-full pt-36">

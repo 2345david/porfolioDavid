@@ -31,6 +31,9 @@
             <NuxtImg src="atSing.svg" width="30" class="bg-gray-700 p-1"/>
             <p>ramosdavu2006@gmail.com</p>
           </div>
+          <div class="flex gap-4 items-center pb-6">
+            <p>Dispongo de carnet de coche tipo B</p>
+          </div>
         </div>
 
         <div class="w-full md:w-[500px]">
@@ -55,9 +58,10 @@
 
         <div>
           <h1 class="text-xl font-semibold">Idiomas</h1>
-          <p><b>Español, Valenciano</b><br>Idiomas nativos</p>
+          <p>Idiomas nativos: <br> <b>Español, Valenciano</b></p>
           <div class="flex flex-col pt-4">
             <div class="flex gap-8">
+              <p>Otros Idiomas:</p>
               <p class="flex pb-2">Ingles:</p>
               <p>A2</p>
             </div>
@@ -86,7 +90,6 @@
           <div class="flex flex-col gap-2">
             <p><strong>Sistema Microinformatico y redes:</strong></p>
             <p>Ciclo formativo de grado medio</p>
-            <p><strong>Carnet de manipulador de alimentos</strong></p>
           </div>
 
           <div class="flex gap-2">
@@ -132,11 +135,19 @@
           </div>
           <div class="flex flex-col gap-2">
             <p><strong>El joomara</strong></p>
-            <p class="flex gap-2">Coin, Málaga | 09/2024 - sigo actualmente</p>
+            <p class="flex gap-2">Coin, Málaga | 09/2024 - 07/2025</p>
             <p>
-              Soy camarero
+              He sido camameraro, atencion en barra, ayuda en cocina y trato con clientes
             </p>
           </div>
+          <div class="flex flex-col gap-2">
+            <p><strong>Mondat</strong></p>
+            <p class="flex gap-2">Monda, Málaga | 07/2025 - 09/2025</p>
+            <p>
+              Operario de produccion de envasado de pan con un grupo de trabajo
+            </p>
+          </div>
+
         </div>
       </div>
 
