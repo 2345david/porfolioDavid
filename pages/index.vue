@@ -83,46 +83,50 @@
       </div>
     </section>
 
-    <!-- HABILIDADES -->
-    <section id="habilidades" class="pt-40 px-6 md:px-32 fade-in-up">
-      <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-blue-500">
-        Habilidades
-      </h2>
+   <!-- HABILIDADES -->
+<section id="habilidades" class="pt-40 px-6 md:px-32 fade-in-up">
+  <h2 class="text-4xl md:text-5xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-blue-500">
+    Habilidades
+  </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
-        <!-- Lenguajes -->
-        <div class="bg-[#111827] p-8 rounded-xl border border-cyan-400/20 shadow-xl hover:border-cyan-400/60 transition-all">
-          <h3 class="text-2xl font-bold text-cyan-300 mb-6 text-center">Lenguajes</h3>
+    <!-- Lenguajes -->
+    <div class="bg-[#111827] p-8 rounded-xl border border-cyan-400/20 shadow-xl hover:border-cyan-400/60 transition-all">
+      <h3 class="text-2xl font-bold text-cyan-300 mb-8 text-center">Lenguajes</h3>
 
-          <div v-for="(item, i) in lenguajes" :key="i" class="mb-6">
-            <p class="font-semibold">{{ item.name }}</p>
-            <div class="w-full bg-gray-700 rounded-full h-3 mt-2">
-              <div
-                class="h-3 rounded-full bg-cyan-400 shadow-[0_0_10px_#22D3EE]"
-                :style="{ width: item.level + '%' }"
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Otros -->
-        <div class="bg-[#111827] p-8 rounded-xl border border-purple-400/20 shadow-xl hover:border-purple-400/60 transition-all">
-          <h3 class="text-2xl font-bold text-purple-300 mb-6 text-center">Otros</h3>
-
-          <div v-for="(item, i) in otros" :key="i" class="mb-6">
-            <p class="font-semibold">{{ item.name }}</p>
-            <div class="w-full bg-gray-700 rounded-full h-3 mt-2">
-              <div
-                class="h-3 rounded-full bg-purple-400 shadow-[0_0_10px_#A855F7]"
-                :style="{ width: item.level + '%' }"
-              ></div>
-            </div>
-          </div>
-        </div>
-
+      <div class="flex flex-wrap gap-3 justify-center">
+        <span
+          v-for="(item, i) in lenguajes"
+          :key="i"
+          class="px-4 py-2 rounded-full border border-cyan-400/30 text-gray-200 text-sm font-medium
+                 hover:border-cyan-400 hover:text-cyan-300 hover:shadow-[0_0_12px_#22D3EE66]
+                 transition-all duration-300 cursor-default"
+        >
+          {{ item.name }}
+        </span>
       </div>
-    </section>
+    </div>
+
+    <!-- Otros -->
+    <div class="bg-[#111827] p-8 rounded-xl border border-purple-400/20 shadow-xl hover:border-purple-400/60 transition-all">
+      <h3 class="text-2xl font-bold text-purple-300 mb-8 text-center">Otros</h3>
+
+      <div class="flex flex-wrap gap-3 justify-center">
+        <span
+          v-for="(item, i) in otros"
+          :key="i"
+          class="px-4 py-2 rounded-full border border-purple-400/30 text-gray-200 text-sm font-medium
+                 hover:border-purple-400 hover:text-purple-300 hover:shadow-[0_0_12px_#A855F766]
+                 transition-all duration-300 cursor-default"
+        >
+          {{ item.name }}
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
 
     <!-- PROYECTOS -->
 <section id="proyectos" class="pt-40 px-6 md:px-32 fade-in-up">
@@ -188,30 +192,32 @@ export default {
   data() {
     return {
       lenguajes: [
-        { name: "HTML", level: 90 },
-        { name: "CSS", level: 90 },
-        { name: "JavaScript", level: 70 },
-        { name: "Nuxt", level: 90 },
-        { name: "Tailwind", level: 90 },
-        { name: "Java", level: 85 },
-        { name: "MariaDB", level: 70 },
-        { name: "Python", level: 60 },
-        { name: "JavaFX", level: 80 },
-        { name: "C", level: 60 }
+        { name: "HTML"},
+        { name: "CSS"},
+        { name: "JavaScript"},
+        { name: "Nuxt"},
+        { name: "Tailwind"},
+        { name: "Java"},
+        { name: "MariaDB"},
+        { name: "Python"},
+        { name: "JavaFX"},
+        { name: "C"}
       ],
       otros: [
-        { name: "Edición de imágenes", level: 80 },
-        { name: "Edición de video", level: 70 },
-        { name: "Ofimática", level: 85 },
-        {name: "Trabajo en equipo", level: 90},
-        {name: "Resolución de problemas", level: 90},
-        {name: "Aprendizaje autónomo", level: 95}
+        { name: "Edición de imágenes"},
+        { name: "Edición de video", },
+        { name: "Ofimática"},
+        {name: "Trabajo en equipo"},
+        {name: "Resolución de problemas"},
+        {name: "Aprendizaje autónomo"},
+        {name: "Manejo de uso de Jira"}
       ],
       proyectos: [
         { img: '/calculadora.png', alt: 'calculadora', text: 'Calculadora hecha con HTML, CSS y JS', link: 'https://github.com/2345david/calculadora' },
         { img: '/tasklist.png', alt: 'tasklist', text: 'App web para organizar tareas con Nuxt y Tailwind', link: 'https://github.com/2345david/taskList' },
         { img: '/tresEnRaya.png', alt: 'tres en rayas', text: 'Juego Tres en Raya hecho en HTML, CSS y JS', link: 'https://github.com/2345david/tres-en-raya' },
-        { img: '/webVTC.jpeg', alt: 'web VTC', text: 'Página web profesional para empresa VTC', link: 'https://malagatranfercouk.com/' }
+        { img: '/webVTC.jpeg', alt: 'web VTC', text: 'Página web profesional para empresa VTC', link: 'https://malagatranfercouk.com/' },
+        { img: '/cap_proyecto_TFG.png', alt: 'cap proyecto', text: 'Proyecto de FCT para el ciclo superior', link: 'https://github.com/2345david/ProyectoTFG/tree/main/ProyectoFinal2DAM'}
       ]
     };
   }

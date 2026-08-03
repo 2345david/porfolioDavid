@@ -4,25 +4,25 @@
     <!-- Texto -->
     <div class="flex flex-col justify-center items-center gap-2 text-green-400 font-mono text-center px-4">
 
-  <p class="font-semibold 
-            text-[22px] 
-            sm:text-[26px] 
-            md:text-[30px] 
-            lg:text-[34px] 
-            xl:text-[40px] 
-            leading-tight">
-    $ ¿Quieres_crear_un_proyecto?
-  </p>
+      <p class="font-semibold 
+                text-[22px] 
+                sm:text-[26px] 
+                md:text-[30px] 
+                lg:text-[34px] 
+                xl:text-[40px] 
+                leading-tight">
+        $ ¿Quieres_crear_un_proyecto?
+      </p>
 
-  <p class="font-medium 
-            text-[16px] 
-            sm:text-[18px] 
-            md:text-[20px] 
-            pb-2">
-    $ no_dudes_en_contactarme
-  </p>
+      <p class="font-medium 
+                text-[16px] 
+                sm:text-[18px] 
+                md:text-[20px] 
+                pb-2">
+        $ no_dudes_en_contactarme
+      </p>
 
-</div>
+    </div>
 
 
     <!-- Terminal -->
@@ -35,7 +35,13 @@
         {{ statusMessage }}<span class="animate-blink">_</span>
       </p>
 
+      <!-- Aviso de límite alcanzado -->
+      <p v-if="cooldownActive" class="mb-4 text-yellow-400">
+        $ limite_de_envios_alcanzado --espera {{ cooldownMinutesLeft }} min
+      </p>
+
       <form 
+        v-else
         id="contactForm"
         @submit.prevent="sendForm"
         action="https://formsubmit.co/57e4ef7bc7190c56e56c23dd260ab95f" 
@@ -103,14 +109,58 @@
 </template>
 
 <script>
+const COOLDOWN_MINUTES = 10;
+const MAX_ENVIOS = 2; // envíos permitidos dentro de la ventana de tiempo
+
 export default {
   data() {
     return {
-      statusMessage: ""
+      statusMessage: "",
+      cooldownActive: false,
+      cooldownMinutesLeft: 0
     };
   },
+  mounted() {
+    this.checkCooldown();
+  },
   methods: {
+    checkCooldown() {
+      const data = JSON.parse(localStorage.getItem("contactFormLimit") || "null");
+      if (!data) {
+        this.cooldownActive = false;
+        return;
+      }
+
+      const now = Date.now();
+      const elapsedMinutes = (now - data.firstSubmit) / 60000;
+
+      if (elapsedMinutes < COOLDOWN_MINUTES && data.count >= MAX_ENVIOS) {
+        this.cooldownActive = true;
+        this.cooldownMinutesLeft = Math.ceil(COOLDOWN_MINUTES - elapsedMinutes);
+      } else if (elapsedMinutes >= COOLDOWN_MINUTES) {
+        localStorage.removeItem("contactFormLimit");
+        this.cooldownActive = false;
+      }
+    },
+
+    registerSubmit() {
+      const data = JSON.parse(localStorage.getItem("contactFormLimit") || "null");
+      const now = Date.now();
+
+      if (!data || (now - data.firstSubmit) / 60000 >= COOLDOWN_MINUTES) {
+        localStorage.setItem("contactFormLimit", JSON.stringify({ firstSubmit: now, count: 1 }));
+      } else {
+        localStorage.setItem(
+          "contactFormLimit",
+          JSON.stringify({ firstSubmit: data.firstSubmit, count: data.count + 1 })
+        );
+      }
+    },
+
     async sendForm() {
+      this.checkCooldown();
+      if (this.cooldownActive) return;
+
       this.statusMessage = "$ procesando";
 
       const form = document.getElementById("contactForm");
@@ -122,6 +172,8 @@ export default {
       });
 
       if (response.ok) {
+        this.registerSubmit();
+        this.checkCooldown();
         this.statusMessage = "$ mensaje_enviado ✔";
         form.reset();
       } else {

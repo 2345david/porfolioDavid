@@ -1,7 +1,7 @@
 <template>
   <div class="pt-20 px-4 sm:px-10 md:px-20 lg:px-32 bg-gray-200">
     <div class="flex flex-col md:flex-row items-center justify-center pb-10 gap-4">
-      <button @click="downloadImage()" class="flex gap-1 text-[16px] md:text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
+      <button @click="downloadPDF()" class="flex gap-1 text-[16px] md:text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
         Descargar CV
       </button>
       <NuxtLink to="/">
@@ -11,8 +11,15 @@
       </NuxtLink>
     </div>
     <div class="flex flex-col md:flex-row items-center gap-6 md:gap-40">
-      <img src="/dav.png" alt="foto" class="w-32 h-32 md:w-auto md:h-auto bg-gray-200 rounded-full"/>
-      <p class="flex items-center font-semibold text-[24px] md:text-[40px]">David Ramos García</p>
+      <img 
+        src="/Foto_david_curriculum.jpg" 
+        alt="foto" 
+        class="w-24 h-24 md:w-32 md:h-32 bg-gray-200 rounded-full object-cover"
+      />
+
+      <p class="flex items-center font-semibold text-[24px] md:text-[40px]">
+        David Ramos García
+      </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 pt-10 gap-6">
       <div class="flex flex-col">
@@ -95,7 +102,7 @@
           <div class="flex gap-2">
             <p><Strong>Ies Montecillos</Strong></p>
             <p>|</p>
-            <p>09/2024 - sigo cursando</p>
+            <p>09/2024 - 06/2026</p>
           </div>
           <div class="flex flex-col gap-2">
             <p><strong>Desarrollo de aplicaciones multiplataformas web:</strong></p>
@@ -147,6 +154,13 @@
               Operario de produccion de envasado de pan con un grupo de trabajo
             </p>
           </div>
+           <div class="flex flex-col gap-2">
+            <p><strong>Babel</strong></p>
+            <p class="flex gap-2">Parque Tecnológico, Málaga | 07/2025 - Puesto Actual</p>
+            <p>
+              Trabajo en un equipo de desarrollador de software
+            </p>
+          </div>
 
         </div>
       </div>
@@ -159,10 +173,10 @@
 export default {
   name: 'curriculum',
   methods: {
-    downloadImage() {
+    downloadPDF() {
       const link = document.createElement('a');
-      link.href = '/myCurriculum.jpg';
-      link.download = 'myCurriculum.jpg';
+      link.href = '/CV_david.pdf';
+      link.download = 'CV_david.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
