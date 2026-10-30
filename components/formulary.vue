@@ -1,195 +1,182 @@
 <template>
-  <div class="pt-10 pb-10 grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1">
-
-    <!-- Texto -->
-    <div class="flex flex-col justify-center items-center gap-2 text-green-400 font-mono text-center px-4">
-
-      <p class="font-semibold 
-                text-[22px] 
-                sm:text-[26px] 
-                md:text-[30px] 
-                lg:text-[34px] 
-                xl:text-[40px] 
-                leading-tight">
-        $ ¿Quieres_crear_un_proyecto?
-      </p>
-
-      <p class="font-medium 
-                text-[16px] 
-                sm:text-[18px] 
-                md:text-[20px] 
-                pb-2">
-        $ no_dudes_en_contactarme
-      </p>
-
+  <form
+    ref="form"
+    class="form"
+    :action="endpoint"
+    method="post"
+    novalidate
+    @submit.prevent="enviar"
+  >
+    <div class="form__row">
+      <div class="field">
+        <label for="nombre">Nombre</label>
+        <input id="nombre" v-model="nombre" type="text" name="name" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" v-model="emailVisitante" type="email" name="correo" autocomplete="email" required />
+      </div>
     </div>
 
-
-    <!-- Terminal -->
-    <div class="bg-black/70 border border-green-500/30 rounded-md shadow-lg p-6 font-mono text-green-300">
-
-      <p class="mb-4">$ iniciar_formulario --modo=terminal</p>
-
-      <!-- Mensaje dinámico -->
-      <p v-if="statusMessage" class="mb-4 text-green-400">
-        {{ statusMessage }}<span class="animate-blink">_</span>
-      </p>
-
-      <!-- Aviso de límite alcanzado -->
-      <p v-if="cooldownActive" class="mb-4 text-yellow-400">
-        $ limite_de_envios_alcanzado --espera {{ cooldownMinutesLeft }} min
-      </p>
-
-      <form 
-        v-else
-        id="contactForm"
-        @submit.prevent="sendForm"
-        action="https://formsubmit.co/57e4ef7bc7190c56e56c23dd260ab95f" 
-        method="post" 
-        class="space-y-6"
-      >
-
-        <!-- Nombre -->
-        <div>
-          <label for="nombre" class="block text-green-400 mb-1">$ introducir --nombre</label>
-          <input 
-            type="text" 
-            name="name" 
-            id="nombre" 
-            placeholder="Escribe tu nombre..."
-            class="w-full bg-black/40 border border-green-500/40 text-green-300 px-3 py-2 rounded-md focus:outline-none focus:border-green-400 focus:shadow-[0_0_10px_#22ff22] transition-all"
-            required
-          >
-        </div>
-
-        <!-- Email -->
-        <div>
-          <label for="email" class="block text-green-400 mb-1">$ introducir --email</label>
-          <input 
-            type="email" 
-            name="correo" 
-            id="email" 
-            placeholder="tuemail@ejemplo.com"
-            class="w-full bg-black/40 border border-green-500/40 text-green-300 px-3 py-2 rounded-md focus:outline-none focus:border-green-400 focus:shadow-[0_0_10px_#22ff22] transition-all"
-            required
-          >
-        </div>
-
-        <!-- Comentario -->
-        <div>
-          <label for="comments" class="block text-green-400 mb-1">$ introducir --mensaje</label>
-          <textarea 
-            name="comments" 
-            id="comments" 
-            placeholder="Escribe tu mensaje..."
-            rows="4"
-            class="w-full bg-black/40 border border-green-500/40 text-green-300 px-3 py-2 rounded-md resize-none focus:outline-none focus:border-green-400 focus:shadow-[0_0_10px_#22ff22] transition-all"
-            required
-          ></textarea>
-        </div>
-
-        <!-- Botón -->
-        <button 
-          type="submit"
-          class="w-full bg-green-600 hover:bg-green-500 text-black font-bold py-3 rounded-md transition-all hover:shadow-[0_0_15px_#22ff22] hover:scale-[1.02]"
-        >
-          ejecutar --enviar
-        </button>
-
-        <p class="text-green-500 text-sm mt-2">(El envío puede tardar unos segundos...)</p>
-
-        <!-- FormSubmit config -->
-        <input type="hidden" name="_captcha" value="false"/>
-      </form>
-
-      <p class="mt-6">$ esperando_respuesta<span class="animate-blink">_</span></p>
-
+    <div class="field">
+      <label for="mensaje">Mensaje</label>
+      <textarea
+        id="mensaje"
+        v-model="mensaje"
+        name="comments"
+        rows="5"
+        placeholder="Cuéntame sobre el puesto o el proyecto"
+        required
+      ></textarea>
     </div>
-  </div>
+
+    <input type="hidden" name="_captcha" value="false" />
+    <input type="hidden" name="_subject" value="Nuevo mensaje desde el porfolio" />
+
+    <div class="form__foot">
+      <button type="submit" class="btn btn--primary" :disabled="estado === 'enviando' || bloqueado">
+        {{ estado === 'enviando' ? 'Enviando…' : 'Enviar mensaje' }}
+      </button>
+      <p class="form__status" :data-tipo="tipoAviso" role="status" aria-live="polite">{{ aviso }}</p>
+    </div>
+  </form>
 </template>
 
 <script>
-const COOLDOWN_MINUTES = 10;
-const MAX_ENVIOS = 2; // envíos permitidos dentro de la ventana de tiempo
+const ESPERA_MINUTOS = 10
+const MAX_ENVIOS = 2
+const CLAVE = 'contactFormLimit'
+
+function leerLimite() {
+  try {
+    return JSON.parse(localStorage.getItem(CLAVE) || 'null')
+  } catch (e) {
+    return null
+  }
+}
+function guardarLimite(valor) {
+  try {
+    if (valor) localStorage.setItem(CLAVE, JSON.stringify(valor))
+    else localStorage.removeItem(CLAVE)
+  } catch (e) {
+    /* sin almacenamiento disponible */
+  }
+}
 
 export default {
+  name: 'Formulary',
   data() {
     return {
-      statusMessage: "",
-      cooldownActive: false,
-      cooldownMinutesLeft: 0
-    };
+      endpoint: 'https://formsubmit.co/57e4ef7bc7190c56e56c23dd260ab95f',
+      nombre: '',
+      emailVisitante: '',
+      mensaje: '',
+      estado: 'idle',
+      aviso: '',
+      tipoAviso: '',
+      bloqueado: false,
+    }
   },
   mounted() {
-    this.checkCooldown();
+    this.comprobarLimite()
   },
   methods: {
-    checkCooldown() {
-      const data = JSON.parse(localStorage.getItem("contactFormLimit") || "null");
-      if (!data) {
-        this.cooldownActive = false;
-        return;
+    comprobarLimite() {
+      const datos = leerLimite()
+      if (!datos) {
+        this.bloqueado = false
+        return
       }
-
-      const now = Date.now();
-      const elapsedMinutes = (now - data.firstSubmit) / 60000;
-
-      if (elapsedMinutes < COOLDOWN_MINUTES && data.count >= MAX_ENVIOS) {
-        this.cooldownActive = true;
-        this.cooldownMinutesLeft = Math.ceil(COOLDOWN_MINUTES - elapsedMinutes);
-      } else if (elapsedMinutes >= COOLDOWN_MINUTES) {
-        localStorage.removeItem("contactFormLimit");
-        this.cooldownActive = false;
-      }
-    },
-
-    registerSubmit() {
-      const data = JSON.parse(localStorage.getItem("contactFormLimit") || "null");
-      const now = Date.now();
-
-      if (!data || (now - data.firstSubmit) / 60000 >= COOLDOWN_MINUTES) {
-        localStorage.setItem("contactFormLimit", JSON.stringify({ firstSubmit: now, count: 1 }));
-      } else {
-        localStorage.setItem(
-          "contactFormLimit",
-          JSON.stringify({ firstSubmit: data.firstSubmit, count: data.count + 1 })
-        );
+      const pasados = (Date.now() - datos.firstSubmit) / 60000
+      if (pasados >= ESPERA_MINUTOS) {
+        guardarLimite(null)
+        this.bloqueado = false
+      } else if (datos.count >= MAX_ENVIOS) {
+        this.bloqueado = true
+        const min = Math.ceil(ESPERA_MINUTOS - pasados)
+        this.tipoAviso = 'info'
+        this.aviso = `Ya has enviado ${MAX_ENVIOS} mensajes. Podrás enviar otro en ${min} min.`
       }
     },
-
-    async sendForm() {
-      this.checkCooldown();
-      if (this.cooldownActive) return;
-
-      this.statusMessage = "$ procesando";
-
-      const form = document.getElementById("contactForm");
-      const formData = new FormData(form);
-
-      const response = await fetch(form.action, {
-        method: "POST",
-        body: formData
-      });
-
-      if (response.ok) {
-        this.registerSubmit();
-        this.checkCooldown();
-        this.statusMessage = "$ mensaje_enviado ✔";
-        form.reset();
+    registrarEnvio() {
+      const datos = leerLimite()
+      const ahora = Date.now()
+      if (!datos || (ahora - datos.firstSubmit) / 60000 >= ESPERA_MINUTOS) {
+        guardarLimite({ firstSubmit: ahora, count: 1 })
       } else {
-        this.statusMessage = "$ error_en_el_envio ❌";
+        guardarLimite({ firstSubmit: datos.firstSubmit, count: datos.count + 1 })
       }
-    }
-  }
-};
+    },
+    async enviar() {
+      this.comprobarLimite()
+      if (this.bloqueado) return
+
+      const form = this.$refs.form
+      if (!form.checkValidity()) {
+        this.tipoAviso = 'error'
+        this.aviso = 'Rellena nombre, un email válido y el mensaje.'
+        form.reportValidity()
+        return
+      }
+
+      this.estado = 'enviando'
+      this.aviso = ''
+      try {
+        const res = await fetch(this.endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        })
+        if (!res.ok) throw new Error(String(res.status))
+        this.registrarEnvio()
+        this.nombre = ''
+        this.emailVisitante = ''
+        this.mensaje = ''
+        this.tipoAviso = 'ok'
+        this.aviso = 'Mensaje enviado. Te responderé lo antes posible.'
+        this.comprobarLimite()
+      } catch (e) {
+        this.tipoAviso = 'error'
+        this.aviso = 'No se ha podido enviar. Escríbeme directamente al email de la izquierda.'
+      } finally {
+        this.estado = 'idle'
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+.form { display: grid; gap: 1.25rem; }
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+@media (max-width: 560px) { .form__row { grid-template-columns: 1fr; } }
+
+.field { display: grid; gap: 0.4rem; }
+.field label { font-weight: 600; font-size: 0.9375rem; }
+.field input,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem 0.875rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.animate-blink {
-  animation: blink 1s infinite;
+.field textarea { resize: vertical; min-height: 8rem; }
+.field input::placeholder,
+.field textarea::placeholder { color: var(--muted); opacity: 0.8; }
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
 }
+
+.form__foot { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.form__foot .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.form__status { font-size: 0.9375rem; color: var(--muted); }
+.form__status[data-tipo='ok'] { color: var(--ink); font-weight: 600; }
+.form__status[data-tipo='error'] { color: #c0352b; font-weight: 600; }
 </style>

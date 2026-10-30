@@ -1,197 +1,242 @@
 <template>
-  <div class="pt-20 px-4 sm:px-10 md:px-20 lg:px-32 bg-gray-200">
-    <div class="flex flex-col md:flex-row items-center justify-center pb-10 gap-4">
-      <button @click="downloadPDF()" class="flex gap-1 text-[16px] md:text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
-        Descargar CV
-      </button>
-      <NuxtLink to="/">
-        <button class="flex gap-1 text-[16px] md:text-[18px] items-center bg-yellow-600 px-4 py-1 hover:bg-yellow-500 rounded transition-transform transform hover:scale-95">
-          Volver
-        </button>
-      </NuxtLink>
+  <div class="cv-page">
+    <div class="wrap cv-bar no-print">
+      <NuxtLink to="/" class="btn btn--ghost"><UiIcon name="back" /> Volver al porfolio</NuxtLink>
+      <a :href="perfil.cv" class="btn btn--primary" download><UiIcon name="download" /> Descargar PDF</a>
     </div>
-    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-40">
-      <img 
-        src="/Foto_david_curriculum.jpg" 
-        alt="foto" 
-        class="w-24 h-24 md:w-32 md:h-32 bg-gray-200 rounded-full object-cover"
-      />
 
-      <p class="flex items-center font-semibold text-[24px] md:text-[40px]">
-        David Ramos García
-      </p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 pt-10 gap-6">
-      <div class="flex flex-col">
-
-        <div class="flex flex-col gap-4">
-          <h1 class="text-xl pb-2">Contacto</h1>
-          <div class="flex gap-4">
-            <NuxtImg src="location.svg" width="30" class="bg-gray-700 p-1"/>
-            <p>Calle Manuel García portal <br> Izquierdo 3ºC 29100 coin AN</p>
-          </div>
-          <div class="flex gap-4 items-center">
-            <NuxtImg src="telephone.svg" width="30" class="bg-gray-700 p-1"/>
-            <p>679 21 94 16</p>
-          </div>
-          <div class="flex gap-4 items-center pb-6">
-            <NuxtImg src="atSing.svg" width="30" class="bg-gray-700 p-1"/>
-            <p>ramosdavu2006@gmail.com</p>
-          </div>
-          <div class="flex gap-4 items-center pb-6">
-            <p>Dispongo de carnet de coche tipo B</p>
-          </div>
-        </div>
-
-        <div class="w-full md:w-[500px]">
-          <hr class="border-black p-2">
-        </div>
-
-        <div class="flex flex-col pb-8">
-          <h1 class="text-xl font-semibold">Aptitudes</h1>
-          <p>
-            Soy un chico con muchas ganas de<br>aprender, ordenado,
-            cabezota en el<br>sentido de que hasta que no termine lo<br>
-            que empecé no paro, puntual,se<br>trabajar en equipo, estoy en constante<br>
-            aprendizaje ya que sigo estudiando por<br>cuenta propia, tengo ambición<br>
-            profesional, se manejar el office(excel,<br>word, powerpoint), sobre todo el word<br>
-            y soy resolverdor de problemas.
-          </p>
-        </div>
-
-        <div class="w-full md:w-[500px]">
-          <hr class="border-black p-2">
-        </div>
-
+    <article class="sheet">
+      <header class="sheet__head">
+        <img class="sheet__photo" src="/Foto_david_curriculum.jpg" alt="David Ramos García" width="665" height="887" />
         <div>
-          <h1 class="text-xl font-semibold">Idiomas</h1>
-          <p>Idiomas nativos: <br> <b>Español, Valenciano</b></p>
-          <div class="flex flex-col pt-4">
-            <div class="flex gap-8">
-              <p>Otros Idiomas:</p>
-              <p class="flex pb-2">Ingles:</p>
-              <p>A2</p>
+          <h1 class="sheet__name">{{ perfil.nombreCompleto }}</h1>
+          <p class="sheet__role">{{ perfil.rol }}</p>
+        </div>
+      </header>
+
+      <div class="sheet__grid">
+        <aside class="sheet__aside">
+          <section>
+            <h2>Contacto</h2>
+            <ul role="list" class="plain">
+              <li>{{ perfil.ubicacion }}</li>
+              <li><a :href="'mailto:' + perfil.email">{{ perfil.email }}</a></li>
+              <li><a :href="enlaces.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              <li><a :href="enlaces.github" target="_blank" rel="noopener noreferrer">github.com/2345david</a></li>
+              <li>Carné de conducir B</li>
+            </ul>
+          </section>
+
+          <section v-for="g in stack" :key="g.grupo">
+            <h2>{{ g.grupo }}</h2>
+            <ul role="list" class="plain">
+              <li v-for="i in g.items" :key="i">{{ i }}</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Idiomas</h2>
+            <ul role="list" class="plain">
+              <li>Español, nativo</li>
+              <li>Valenciano, nativo</li>
+              <li>Inglés, A2</li>
+            </ul>
+          </section>
+        </aside>
+
+        <div class="sheet__main">
+          <section>
+            <h2>Perfil</h2>
+            <p>
+              Desarrollador de software con formación en Desarrollo de Aplicaciones Multiplataforma y experiencia en
+              equipos de desarrollo profesionales. Aprendo rápido, me adapto a nuevos retos y no dejo un problema hasta
+              resolverlo. Trabajo de forma organizada, cumplo plazos bajo presión y cuido el detalle en cada proyecto.
+            </p>
+          </section>
+
+          <section>
+            <h2>Experiencia</h2>
+            <div v-for="e in experiencia" :key="e.puesto + e.empresa" class="entry">
+              <div class="entry__head">
+                <h3>{{ e.puesto }}, {{ e.empresa }}</h3>
+                <p class="entry__when">{{ e.fechas }}</p>
+              </div>
+              <p class="entry__where">{{ e.lugar }}</p>
+              <p v-if="e.texto">{{ e.texto }}</p>
             </div>
-          </div>
+          </section>
+
+          <section>
+            <h2>Formación</h2>
+            <div v-for="f in formacion" :key="f.titulo" class="entry">
+              <div class="entry__head">
+                <h3>{{ f.titulo }}</h3>
+                <p class="entry__when">{{ f.fechas }}</p>
+              </div>
+              <p class="entry__where">{{ f.centro }}</p>
+            </div>
+          </section>
+
+          <section v-if="certs.length">
+            <h2>Certificaciones</h2>
+            <div v-for="c in certs" :key="c.nombre" class="entry">
+              <div class="entry__head">
+                <h3>{{ c.nombre }}</h3>
+                <p class="entry__when">{{ c.estado === 'en-curso' ? 'En curso' : c.fecha }}</p>
+              </div>
+              <p class="entry__where">{{ c.emisor }}</p>
+            </div>
+          </section>
         </div>
       </div>
-
-      <div class="bg-white">
-        <h1 class="text-xl p-2">Formación</h1>
-        <div class="flex flex-col gap-8 p-4">
-          <div class="flex gap-2">
-            <p><strong>Ies ciudad de Coin</strong></p>
-            <p>|</p>
-            <p>09/2019 - 06/2022</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><Strong>Educacion secundaria obligatoria:</strong></p>
-            <p>La ESO</p>
-          </div>
-
-          <div class="flex gap-2">
-            <p><Strong>Ies Serrania</Strong></p>
-            <p>|</p>
-            <p>09/2022 - 06/2024</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><strong>Sistema Microinformatico y redes:</strong></p>
-            <p>Ciclo formativo de grado medio</p>
-          </div>
-
-          <div class="flex gap-2">
-            <p><Strong>Ies Montecillos</Strong></p>
-            <p>|</p>
-            <p>09/2024 - 06/2026</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><strong>Desarrollo de aplicaciones multiplataformas web:</strong></p>
-            <p>Ciclo formativo de grado superior</p>
-          </div>
-
-        </div>
-
-        <div class="w-full md:w-[500px] p-4">
-          <hr class="border-black p-2">
-        </div>
-
-        <div class="flex flex-col gap-4 p-4">
-          <h1 class="text-xl">Historial Laboral</h1>
-
-          <div class="flex flex-col gap-2">
-            <p><strong>Dependiente - El tentempie</strong></p>
-            <p>
-              Reponedor de productos ademas de atención al cliente<br>
-            </p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><strong>Top Group Express - Estudiante en prácticas</strong></p>
-            <p class="flex gap-2">Coin, Málaga | 03/2024 - 06/2024</p>
-            <p>
-              Lo que he hecho en la empresa ha sido aprender a poder manejarme
-              con el tema del front-end, aprendiendo a programar mejor en
-              HTML y CSS,<br> además de aprender Nuxt, Tailwind, JavaScript y Vitest.
-            </p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><strong>El atun -  camarero</strong></p>
-            <p class="flex gap-2">Coin, Málaga | 06/2024 - 09/2024</p>
-            <p>
-              He sido camarero y ayudante de cocina
-            </p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><strong>El joomara</strong></p>
-            <p class="flex gap-2">Coin, Málaga | 09/2024 - 07/2025</p>
-            <p>
-              He sido camameraro, atencion en barra, ayuda en cocina y trato con clientes
-            </p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <p><strong>Mondat</strong></p>
-            <p class="flex gap-2">Monda, Málaga | 07/2025 - 09/2025</p>
-            <p>
-              Operario de produccion de envasado de pan con un grupo de trabajo
-            </p>
-          </div>
-           <div class="flex flex-col gap-2">
-            <p><strong>Babel</strong></p>
-            <p class="flex gap-2">Parque Tecnológico, Málaga | 07/2025 - Puesto Actual</p>
-            <p>
-              Trabajo en un equipo de desarrollador de software
-            </p>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
+    </article>
   </div>
 </template>
 
 <script>
+import { perfil, enlaces, stack } from '~/data/portfolio.js'
+import { certificaciones } from '~/data/certificaciones.js'
+
 export default {
-  name: 'curriculum',
-  methods: {
-    downloadPDF() {
-      const link = document.createElement('a');
-      link.href = '/CV_david.pdf';
-      link.download = 'CV_david.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }
+  name: 'Curriculum',
+  data: () => ({
+    perfil,
+    enlaces,
+    stack: stack.filter((g) => g.grupo !== 'Forma de trabajar'),
+    certs: certificaciones,
+    experiencia: [
+      {
+        puesto: 'Programador',
+        empresa: 'Babel',
+        lugar: 'Parque Tecnológico de Málaga',
+        fechas: 'jun. 2026 – actualidad',
+        texto: 'Desarrollo de software dentro de un equipo profesional.',
+      },
+      {
+        puesto: 'Prácticas de desarrollo frontend',
+        empresa: 'Top Group Express',
+        lugar: 'Coín, Málaga',
+        fechas: 'mar. 2024 – jun. 2024',
+        texto: 'Maquetación con HTML y CSS, desarrollo con Nuxt, Tailwind y JavaScript, y tests con Vitest.',
+      },
+      {
+        puesto: 'Operario de producción',
+        empresa: 'Mondat',
+        lugar: 'Monda, Málaga',
+        fechas: 'jul. 2025 – sept. 2025',
+        texto: 'Trabajo en equipo en la línea de envasado de pan.',
+      },
+      {
+        puesto: 'Camarero',
+        empresa: 'El Joomara',
+        lugar: 'Coín, Málaga',
+        fechas: 'sept. 2024 – jul. 2025',
+        texto: 'Atención en barra, apoyo en cocina y trato con clientes.',
+      },
+      {
+        puesto: 'Camarero',
+        empresa: 'El Atún',
+        lugar: 'Coín, Málaga',
+        fechas: 'jun. 2024 – sept. 2024',
+        texto: 'Servicio en sala y ayuda en cocina.',
+      },
+    ],
+    formacion: [
+      { titulo: 'CFGS Desarrollo de Aplicaciones Multiplataforma', centro: 'IES Los Montecillos, Coín', fechas: '2024 – 2026' },
+      { titulo: 'CFGM Sistemas Microinformáticos y Redes', centro: 'IES Serranía, Alozaina', fechas: '2022 – 2024' },
+      { titulo: 'Educación Secundaria Obligatoria', centro: 'IES Ciudad de Coín', fechas: '2018 – 2022' },
+    ],
+  }),
 }
 </script>
 
 <style scoped>
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr !important;
-  }
-  .w-full {
-    width: 100% !important;
-  }
+.cv-page { padding-block: 1.5rem 4rem; }
+
+.cv-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  max-width: 56rem;
+  margin-bottom: 1.5rem;
+}
+
+.sheet {
+  max-width: 56rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  margin-inline: max(var(--gutter), calc((100% - 56rem) / 2));
+}
+
+.sheet__head {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 0.5rem + 2vw, 2rem);
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--ink);
+}
+.sheet__photo {
+  width: clamp(5rem, 4rem + 5vw, 7.5rem);
+  aspect-ratio: 1;
+  height: auto;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 12px;
+}
+.sheet__name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.2rem + 3.5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+  font-variation-settings: 'opsz' 96;
+}
+.sheet__role { color: var(--accent); font-weight: 600; font-size: var(--step-1); margin-top: 0.5rem; }
+
+.sheet__grid {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  padding-top: 2rem;
+}
+
+h2 {
+  font-size: var(--step--1);
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+section + section { margin-top: 2rem; }
+
+.sheet__aside { font-size: 0.9375rem; }
+.plain { list-style: none; padding: 0; display: grid; gap: 0.3rem; }
+.plain a { overflow-wrap: anywhere; }
+
+.sheet__main p { max-width: 38rem; }
+
+.entry + .entry { margin-top: 1.25rem; }
+.entry__head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+.entry h3 {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.entry__when { font-size: var(--step--1); color: var(--muted); white-space: nowrap; }
+.entry__where { color: var(--muted); font-size: 0.9375rem; margin-bottom: 0.25rem; }
+
+@media (max-width: 700px) {
+  .sheet__grid { grid-template-columns: 1fr; }
+  .sheet__main { order: -1; }
+}
+
+@media print {
+  .cv-page { padding: 0; }
+  .sheet { border: 0; border-radius: 0; padding: 0; margin: 0; max-width: none; }
+  a { text-decoration: none; }
 }
 </style>

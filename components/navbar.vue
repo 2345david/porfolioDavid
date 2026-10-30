@@ -1,113 +1,222 @@
 <template>
-  <div :class="{ 'border-b pb-4': isBorderVisible }" class="text-white bg-blue-900 bg-opacity-95 border-gray flex flex-row items-center justify-between pt-4 pr-5 pl-5 fixed top-0 start-0 w-full z-20 pb-4">
-    <div @click="scrollToSection('#inicio')" class="cursor-pointer flex items-center justify-center gap-2">
-      <div>
-        <NuxtImg :src="image"
-          width="60"
-        />
-      </div>
-      <div class="text-[25px] text-white font-semibold hover:text-white">
-        Davurg.dev
-      </div>
-    </div>
-    <div class="flex xl:gap-56 md:gap-4 flex-row-reverse sm:gap-4 lg:gap-4 items-center xl:flex-row md:flex-row-reverse lg:flex-row-reverse sm:flex-row-reverse">
-      <div>
-        <button @click="toggleMenu" class="burger-button block xl:hidden">
-          <NuxtImg width="40" class="burger-button block xl:hidden" src="https://www.svgrepo.com/show/374767/picklist-type.svg"/>
+  <header class="nav" :class="{ 'nav--scrolled': scrolled }">
+    <div class="wrap nav__inner">
+      <a href="#inicio" class="nav__brand" @click="cerrar">
+        <span class="nav__mark" aria-hidden="true">DR</span>
+        <span>David Ramos</span>
+      </a>
+
+      <nav class="nav__links" :class="{ 'is-open': abierto }" aria-label="Secciones">
+        <a
+          v-for="s in secciones"
+          :key="s.id"
+          :href="'#' + s.id"
+          :aria-current="activa === s.id ? 'true' : null"
+          @click="cerrar"
+        >{{ s.texto }}</a>
+        <a :href="cv" class="nav__cv-mobile" download>Descargar CV</a>
+      </nav>
+
+      <div class="nav__actions">
+        <button
+          type="button"
+          class="nav__icon"
+          :aria-label="oscuro ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+          @click="cambiarTema"
+        >
+          <UiIcon :name="oscuro ? 'sun' : 'moon'" />
         </button>
-
-        <div v-if="isMenuOpen" class="fixed inset-0 flex justify-center items-center bg-gray-200 bg-opacity-96 z-50">
-          <nav class="flex flex-col items-center space-y-4" @click.stop>
-            <button @click="toggleMenu" class="absolute top-4 right-4 text-gray-600">
-              <NuxtImg width="40" src="https://www.svgrepo.com/show/517454/letter-uppercase-square-x.svg"/>
-            </button>
-            <div class="flex flex-col justify-center items-center gap-4">
-              <span @click="scrollToSection('#inicio')" class="cursor-pointer hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text1}}</span>
-              <span @click="scrollToSection('#sobre-mi')" class="cursor-pointer hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text2}}</span>
-              <span @click="scrollToSection('#habilidades')" class="cursor-pointer hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text3}}</span>
-              <span @click="scrollToSection('#proyectos')" class="cursor-pointer hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text4}}</span>
-              <span @click="scrollToSection('#contactos')" class="cursor-pointer hover:text-orange-500 text-[50px] text-black hover:border-b hover:border-orange-500">{{text5}}</span>
-
-            </div>
-          </nav>
-        </div>
-
-        <div v-else class="items-center justify-center flex flex-row xl:gap-8">
-          <div class="flex-row gap-1  p-1 rounded hidden xl:block">
-            <div class="flex flex-row gap-4">
-              <div class="flex justify-center items-center gap-16 pr-20">
-                <span @click="scrollToSection('#inicio')" class="cursor-pointer hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text1}}</span>
-                <span @click="scrollToSection('#sobre-mi')" class="cursor-pointer hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text2}}</span>
-                <span @click="scrollToSection('#habilidades')" class="cursor-pointer hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text3}}</span>
-                <span @click="scrollToSection('#proyectos')" class="cursor-pointer hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text4}}</span>
-                <span @click="scrollToSection('#contactos')" class="cursor-pointer hover:text-orange-500 text-[20px] text-white hover:border-b hover:border-orange-500">{{text5}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a :href="cv" class="btn btn--primary nav__cv" download>
+          <UiIcon name="download" /> CV
+        </a>
+        <button
+          type="button"
+          class="nav__icon nav__toggle"
+          :aria-expanded="abierto ? 'true' : 'false'"
+          aria-label="Abrir menú"
+          @click="abierto = !abierto"
+        >
+          <UiIcon :name="abierto ? 'close' : 'menu'" />
+        </button>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script>
-
-
-
 export default {
-  name: "navbar",
+  name: 'Navbar',
+  props: {
+    cv: { type: String, default: '/CV_david.pdf' },
+  },
   data: () => ({
-    isBorderVisible: false,
-    isMenuOpen: false
+    scrolled: false,
+    abierto: false,
+    oscuro: false,
+    activa: '',
+    secciones: [
+      { id: 'trayectoria', texto: 'Trayectoria' },
+      { id: 'proyectos', texto: 'Proyectos' },
+      { id: 'stack', texto: 'Stack' },
+      { id: 'certificaciones', texto: 'Certificaciones' },
+      { id: 'contacto', texto: 'Contacto' },
+    ],
   }),
-  methods: {
-    scrollToSection(id) {
-      const element = document.querySelector(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-      this.isMenuOpen = false;
-    },
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    },
-    handleScroll() {
-      this.isBorderVisible = window.scrollY >= 60 ;
+  mounted() {
+    this.onScroll()
+    window.addEventListener('scroll', this.onScroll, { passive: true })
+
+    const html = document.documentElement
+    this.oscuro =
+      html.dataset.theme === 'dark' ||
+      (!html.dataset.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+    if ('IntersectionObserver' in window) {
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) this.activa = e.target.id
+          })
+        },
+        { rootMargin: '-45% 0px -50% 0px' }
+      )
+      this.secciones.forEach((s) => {
+        const el = document.getElementById(s.id)
+        if (el) this.observer.observe(el)
+      })
     }
   },
-
-
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.onScroll)
+    if (this.observer) this.observer.disconnect()
   },
-
-
-
-  props: {
-    text1:{
-      type: String,
-      default: ""
+  methods: {
+    onScroll() {
+      this.scrolled = window.scrollY > 8
     },
-    text2:{
-      type: String,
-      default: ""
+    cerrar() {
+      this.abierto = false
     },
-    text3:{
-      type: String,
-      default: ""
+    cambiarTema() {
+      this.oscuro = !this.oscuro
+      const tema = this.oscuro ? 'dark' : 'light'
+      document.documentElement.dataset.theme = tema
+      try {
+        localStorage.setItem('tema', tema)
+      } catch (e) {
+        /* sin almacenamiento: el tema dura hasta recargar */
+      }
     },
-    text4:{
-      type: String,
-      default: ""
-    },
-    text5:{
-      type: String,
-      default: ""
-    },
-    image: {
-      type: String,
-      default: ""
-    },
-  }
+  },
 }
 </script>
+
+<style scoped>
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--nav-h);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s;
+}
+.nav--scrolled { border-bottom-color: var(--line); }
+
+.nav__inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--step-1);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  margin-right: auto;
+}
+.nav__mark {
+  display: grid;
+  place-items: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 0.875rem;
+  letter-spacing: 0;
+}
+
+.nav__links {
+  display: flex;
+  gap: 0.25rem;
+}
+.nav__links a {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: color 0.2s, background-color 0.2s;
+}
+.nav__links a:hover { color: var(--ink); }
+.nav__links a[aria-current='true'] { color: var(--ink); background: var(--accent-soft); }
+.nav__cv-mobile { display: none; }
+
+.nav__actions { display: flex; align-items: center; gap: 0.5rem; }
+.nav__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.nav__icon:hover { border-color: var(--ink); }
+.nav__icon svg { width: 1.15rem; height: 1.15rem; }
+.nav__cv { min-height: 2.75rem; }
+.nav__toggle { display: none; }
+
+@media (max-width: 900px) {
+  .nav__toggle { display: grid; }
+  .nav__cv { display: none; }
+  .nav__links {
+    position: fixed;
+    inset: var(--nav-h) 0 auto 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem var(--gutter) 1.5rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-0.5rem);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  }
+  .nav__links.is-open { opacity: 1; transform: none; visibility: visible; }
+  .nav__links a {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 600;
+    color: var(--ink);
+    padding: 0.625rem 0;
+    border-radius: 0;
+    letter-spacing: -0.02em;
+  }
+  .nav__links a[aria-current='true'] { background: none; color: var(--accent); }
+  .nav__cv-mobile { display: block; color: var(--accent) !important; }
+}
+</style>

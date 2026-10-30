@@ -1,36 +1,58 @@
 <template>
   <button
-      v-show="visible"
-      @click="scrollToTop"
-      class="fixed bottom-16 right-10  bg-blue-500 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out"
+    type="button"
+    class="to-top no-print"
+    :class="{ 'is-visible': visible }"
+    aria-label="Volver arriba"
+    :tabindex="visible ? 0 : -1"
+    @click="subir"
   >
-    ↑
+    <UiIcon name="up" />
   </button>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      visible: false,
-    }
-  },
+  name: 'BackButton',
+  data: () => ({ visible: false }),
   mounted() {
-    window.addEventListener('scroll', this.toggleVisibility)
+    window.addEventListener('scroll', this.comprobar, { passive: true })
   },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.toggleVisibility)
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.comprobar)
   },
   methods: {
-    toggleVisibility() {
-      this.visible = window.scrollY > 200
+    comprobar() {
+      this.visible = window.scrollY > 700
     },
-    scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      })
+    subir() {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
   },
 }
 </script>
+
+<style scoped>
+.to-top {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(0.5rem);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s, border-color 0.2s;
+}
+.to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { border-color: var(--ink); }
+.to-top svg { width: 1.2rem; height: 1.2rem; }
+</style>
