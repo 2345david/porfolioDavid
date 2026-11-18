@@ -2,30 +2,30 @@
   <form
     ref="form"
     class="form"
-    :action="endpoint"
+    :action="FORM_URL"
     method="post"
     novalidate
     @submit.prevent="enviar"
   >
     <div class="form__row">
       <div class="field">
-        <label for="nombre">Nombre</label>
+        <label for="nombre">{{ ui('formNombre') }}</label>
         <input id="nombre" v-model="nombre" type="text" name="name" autocomplete="name" required />
       </div>
       <div class="field">
-        <label for="email">Email</label>
-        <input id="email" v-model="emailVisitante" type="email" name="correo" autocomplete="email" required />
+        <label for="email">{{ ui('formEmail') }}</label>
+        <input id="email" v-model="emailVisitante" type="email" name="email" autocomplete="email" required />
       </div>
     </div>
 
     <div class="field">
-      <label for="mensaje">Mensaje</label>
+      <label for="mensaje">{{ ui('formMensaje') }}</label>
       <textarea
         id="mensaje"
         v-model="mensaje"
-        name="comments"
+        name="message"
         rows="5"
-        placeholder="Cuéntame sobre el puesto o el proyecto"
+        :placeholder="ui('formPlaceholder')"
         required
       ></textarea>
     </div>
@@ -35,10 +35,15 @@
 
     <div class="form__foot">
       <button type="submit" class="btn btn--primary" :disabled="estado === 'enviando' || bloqueado">
-        {{ estado === 'enviando' ? 'Enviando…' : 'Enviar mensaje' }}
+        {{ estado === 'enviando' ? ui('formEnviando') : ui('formEnviar') }}
       </button>
       <p class="form__status" :data-tipo="tipoAviso" role="status" aria-live="polite">{{ aviso }}</p>
     </div>
+
+    <p class="form__legal">
+      {{ ui('formLegal') }}
+      <NuxtLink :to="ui('rutaPrivacidad')">{{ ui('formLegalEnlace') }}</NuxtLink>.
+    </p>
   </form>
 </template>
 
@@ -46,6 +51,12 @@
 const ESPERA_MINUTOS = 10
 const MAX_ENVIOS = 2
 const CLAVE = 'contactFormLimit'
+
+// FormSubmit: la dirección normal sirve si el navegador envía el formulario sin JavaScript;
+// para enviarlo con fetch (sin salir de la página) hay que usar la versión /ajax/.
+const ID_FORMSUBMIT = '57e4ef7bc7190c56e56c23dd260ab95f'
+const FORM_URL = `https://formsubmit.co/${ID_FORMSUBMIT}`
+const AJAX_URL = `https://formsubmit.co/ajax/${ID_FORMSUBMIT}`
 
 function leerLimite() {
   try {
@@ -65,9 +76,13 @@ function guardarLimite(valor) {
 
 export default {
   name: 'Formulary',
+  setup() {
+    const { ui } = useIdioma()
+    return { ui }
+  },
   data() {
     return {
-      endpoint: 'https://formsubmit.co/57e4ef7bc7190c56e56c23dd260ab95f',
+      FORM_URL,
       nombre: '',
       emailVisitante: '',
       mensaje: '',
@@ -95,7 +110,7 @@ export default {
         this.bloqueado = true
         const min = Math.ceil(ESPERA_MINUTOS - pasados)
         this.tipoAviso = 'info'
-        this.aviso = `Ya has enviado ${MAX_ENVIOS} mensajes. Podrás enviar otro en ${min} min.`
+        this.aviso = this.ui('formLimite', { max: MAX_ENVIOS, min })
       }
     },
     registrarEnvio() {
@@ -114,7 +129,7 @@ export default {
       const form = this.$refs.form
       if (!form.checkValidity()) {
         this.tipoAviso = 'error'
-        this.aviso = 'Rellena nombre, un email válido y el mensaje.'
+        this.aviso = this.ui('formIncompleto')
         form.reportValidity()
         return
       }
@@ -122,22 +137,30 @@ export default {
       this.estado = 'enviando'
       this.aviso = ''
       try {
-        const res = await fetch(this.endpoint, {
+        const res = await fetch(AJAX_URL, {
           method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            name: this.nombre,
+            email: this.emailVisitante, // FormSubmit lo usa como "responder a"
+            message: this.mensaje,
+            _subject: 'Nuevo mensaje desde el porfolio',
+            _template: 'table',
+            _captcha: 'false',
+          }),
         })
-        if (!res.ok) throw new Error(String(res.status))
+        const datos = await res.json().catch(() => ({}))
+        if (!res.ok || String(datos.success) !== 'true') throw new Error(datos.message || String(res.status))
         this.registrarEnvio()
         this.nombre = ''
         this.emailVisitante = ''
         this.mensaje = ''
         this.tipoAviso = 'ok'
-        this.aviso = 'Mensaje enviado. Te responderé lo antes posible.'
+        this.aviso = this.ui('formOk')
         this.comprobarLimite()
       } catch (e) {
         this.tipoAviso = 'error'
-        this.aviso = 'No se ha podido enviar. Escríbeme directamente al email de la izquierda.'
+        this.aviso = this.ui('formError')
       } finally {
         this.estado = 'idle'
       }
@@ -177,6 +200,9 @@ export default {
 .form__foot { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .form__foot .btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .form__status { font-size: 0.9375rem; color: var(--muted); }
+.form__legal { font-size: 0.8125rem; line-height: 1.5; color: var(--muted); max-width: 34rem; }
+.form__legal a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
+.form__legal a:hover { color: var(--ink); }
 .form__status[data-tipo='ok'] { color: var(--ink); font-weight: 600; }
 .form__status[data-tipo='error'] { color: #c0352b; font-weight: 600; }
 </style>

@@ -1,34 +1,33 @@
 <template>
   <section id="certificaciones" class="section" aria-labelledby="cert-title">
     <div class="wrap">
-      <div class="section-head">
+      <div v-reveal class="section-head">
+        <p class="section-eyebrow">04</p>
         <h2 id="cert-title" class="section-title">
-          Certificaciones<span v-if="lista.length" class="cert__count">{{ lista.length }}</span>
+          {{ ui('navCertificaciones') }}<span v-if="lista.length" class="cert__count">{{ lista.length }}</span>
         </h2>
-        <p class="section-lead">
-          Formación que sigo sumando por mi cuenta, fuera del ciclo y del trabajo.
-        </p>
+        <p class="section-lead">{{ ui('certLead') }}</p>
       </div>
 
       <ul v-if="lista.length" class="cert__grid" role="list">
-        <li v-for="c in lista" :key="c.nombre + c.fecha" class="cert">
+        <li v-for="(c, ci) in lista" :key="ci" v-reveal="ci * 80" class="cert">
           <div class="cert__top">
             <p class="cert__issuer">{{ c.emisor }}</p>
-            <p v-if="c.estado === 'en-curso'" class="cert__state">En curso</p>
-            <p v-else class="cert__date">{{ formatoFecha(c.fecha) }}</p>
+            <p v-if="c.estado === 'en-curso'" class="cert__state">{{ ui('enCurso') }}</p>
+            <p v-else class="cert__date">{{ fecha(c.fecha) }}</p>
           </div>
-          <h3 class="cert__name">{{ c.nombre }}</h3>
+          <h3 class="cert__name">{{ t(c.nombre) }}</h3>
           <ul v-if="c.habilidades && c.habilidades.length" class="tags" role="list">
-            <li v-for="h in c.habilidades" :key="h" class="tag">{{ h }}</li>
+            <li v-for="(h, hi) in c.habilidades" :key="hi" class="tag">{{ t(h) }}</li>
           </ul>
           <div class="cert__foot">
             <p v-if="c.credencial" class="cert__id">ID {{ c.credencial }}</p>
             <div v-if="c.url || c.pdf" class="cert__links">
               <a v-if="c.url" :href="c.url" class="link" target="_blank" rel="noopener noreferrer">
-                Verificar<span class="sr-only"> la credencial de {{ c.nombre }} (se abre en otra pestaña)</span>
+                {{ ui('verificar') }}<span class="sr-only">{{ ui('verificarSr', { nombre: t(c.nombre) }) }}</span>
               </a>
               <a v-if="c.pdf" :href="c.pdf" class="link" target="_blank" rel="noopener noreferrer">
-                Ver certificado<span class="sr-only"> de {{ c.nombre }} en PDF (se abre en otra pestaña)</span>
+                {{ ui('verCertificado') }}<span class="sr-only">{{ ui('verCertificadoSr', { nombre: t(c.nombre) }) }}</span>
               </a>
             </div>
           </div>
@@ -36,8 +35,8 @@
       </ul>
 
       <div v-else class="cert__empty">
-        <p class="cert__empty-title">Las primeras están en camino.</p>
-        <p>Estoy preparando certificaciones en ciberseguridad y desarrollo web. Aparecerán aquí en cuanto las obtenga.</p>
+        <p class="cert__empty-title">{{ ui('certVacioTitulo') }}</p>
+        <p>{{ ui('certVacioTexto') }}</p>
       </div>
     </div>
   </section>
@@ -46,10 +45,12 @@
 <script>
 import { certificaciones } from '~/data/certificaciones.js'
 
-const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic']
-
 export default {
   name: 'Certificaciones',
+  setup() {
+    const { t, ui, fecha } = useIdioma()
+    return { t, ui, fecha }
+  },
   computed: {
     lista() {
       // En curso primero, luego las obtenidas de más reciente a más antigua.
@@ -57,13 +58,6 @@ export default {
         if (a.estado !== b.estado) return a.estado === 'en-curso' ? -1 : 1
         return String(b.fecha).localeCompare(String(a.fecha))
       })
-    },
-  },
-  methods: {
-    formatoFecha(f) {
-      const [a, m] = String(f || '').split('-')
-      if (!a) return ''
-      return m ? `${MESES[Number(m) - 1]} ${a}` : a
     },
   },
 }

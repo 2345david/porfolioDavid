@@ -1,12 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const titulo = 'David Ramos · Desarrollador de software'
+const titulo = 'David Ramos · Desarrollador frontend (Vue, Nuxt) en Málaga'
 const descripcion =
-  'Porfolio de David Ramos García, programador en Babel (Málaga). Frontend con Vue, Nuxt y Tailwind; backend con Java, Python y SQL.'
+  'Porfolio de David Ramos García, desarrollador de software en Babel (Málaga). Webs y apps con Vue, Nuxt y Tailwind; backend con Java, Python y SQL.'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@nuxt/image', '@pinia/nuxt'],
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/fonts.css', '~/assets/css/main.css'],
+  // La antigua dirección del currículum sigue funcionando y redirige a la nueva.
+  routeRules: {
+    '/curriculumPage': { redirect: { to: '/curriculum', statusCode: 301 } },
+    // Caché larga para las fuentes: el navegador no las vuelve a descargar.
+    '/fonts/**': { headers: { 'cache-control': 'public, max-age=31536000, immutable' } },
+  },
+  // Sirve los archivos comprimidos (gzip y brotli): la web pesa bastante menos.
+  nitro: { compressPublicAssets: true },
   app: {
     head: {
       htmlAttrs: { lang: 'es' },
@@ -18,16 +26,21 @@ export default defineNuxtConfig({
         { property: 'og:title', content: titulo },
         { property: 'og:description', content: descripcion },
         { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: '/david.png' },
+        { property: 'og:image', content: '/og-image.jpg' },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:locale', content: 'es_ES' },
+        { property: 'og:locale:alternate', content: 'en_GB' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'author', content: 'David Ramos García' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=JetBrains+Mono:wght@400;500&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400&display=swap',
-        },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: 'any' },
+        { rel: 'icon', type: 'image/png', href: '/icon-512.png', sizes: '512x512' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        // Fuentes propias: se precargan las dos principales para que no haya salto al cargar.
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/bricolage-grotesque-latin-opsz-normal.woff2', crossorigin: '' },
+        { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/schibsted-grotesk-latin-wght-normal.woff2', crossorigin: '' },
       ],
       script: [
         {

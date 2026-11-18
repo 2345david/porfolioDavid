@@ -6,22 +6,33 @@
         <span>David Ramos</span>
       </a>
 
-      <nav class="nav__links" :class="{ 'is-open': abierto }" aria-label="Secciones">
+      <nav class="nav__links" :class="{ 'is-open': abierto }" :aria-label="ui('navSecciones')">
         <a
           v-for="s in secciones"
           :key="s.id"
           :href="'#' + s.id"
           :aria-current="activa === s.id ? 'true' : null"
           @click="cerrar"
-        >{{ s.texto }}</a>
-        <a :href="cv" class="nav__cv-mobile" download>Descargar CV</a>
+        >{{ ui(s.clave) }}</a>
+        <a :href="cv" class="nav__cv-mobile" download>{{ ui('descargarCV') }}</a>
       </nav>
 
       <div class="nav__actions">
         <button
           type="button"
+          class="nav__lang"
+          :title="ui('cambiarIdioma')"
+          @click="cambiarIdioma()"
+        >
+          <span :class="{ 'is-active': idioma === 'es' }">ES</span>
+          <span class="nav__lang-sep" aria-hidden="true">/</span>
+          <span :class="{ 'is-active': idioma === 'en' }">EN</span>
+          <span class="sr-only">, {{ ui('cambiarIdioma') }}</span>
+        </button>
+        <button
+          type="button"
           class="nav__icon"
-          :aria-label="oscuro ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+          :aria-label="oscuro ? ui('temaClaro') : ui('temaOscuro')"
           @click="cambiarTema"
         >
           <UiIcon :name="oscuro ? 'sun' : 'moon'" />
@@ -33,7 +44,7 @@
           type="button"
           class="nav__icon nav__toggle"
           :aria-expanded="abierto ? 'true' : 'false'"
-          aria-label="Abrir menú"
+          :aria-label="ui('abrirMenu')"
           @click="abierto = !abierto"
         >
           <UiIcon :name="abierto ? 'close' : 'menu'" />
@@ -49,17 +60,21 @@ export default {
   props: {
     cv: { type: String, default: '/CV_david.pdf' },
   },
+  setup() {
+    const { idioma, ui, cambiarIdioma } = useIdioma()
+    return { idioma, ui, cambiarIdioma }
+  },
   data: () => ({
     scrolled: false,
     abierto: false,
     oscuro: false,
     activa: '',
     secciones: [
-      { id: 'trayectoria', texto: 'Trayectoria' },
-      { id: 'proyectos', texto: 'Proyectos' },
-      { id: 'stack', texto: 'Stack' },
-      { id: 'certificaciones', texto: 'Certificaciones' },
-      { id: 'contacto', texto: 'Contacto' },
+      { id: 'trayectoria', clave: 'navTrayectoria' },
+      { id: 'proyectos', clave: 'navProyectos' },
+      { id: 'stack', clave: 'navStack' },
+      { id: 'certificaciones', clave: 'navCertificaciones' },
+      { id: 'contacto', clave: 'navContacto' },
     ],
   }),
   mounted() {
@@ -188,6 +203,30 @@ export default {
 .nav__icon:hover { border-color: var(--ink); }
 .nav__icon svg { width: 1.15rem; height: 1.15rem; }
 .nav__cv { min-height: 2.75rem; }
+
+.nav__lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 2.75rem;
+  padding: 0 0.875rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.nav__lang:hover { border-color: var(--ink); }
+.nav__lang .is-active { color: var(--accent); font-weight: 700; }
+.nav__lang-sep { opacity: 0.5; }
+
+@media (max-width: 400px) {
+  .nav__brand span:not(.nav__mark) { display: none; }
+}
 .nav__toggle { display: none; }
 
 @media (max-width: 900px) {

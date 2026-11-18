@@ -12,6 +12,8 @@
 //  credencial   (opcional) ID de la credencial
 //  habilidades  (opcional) Lista corta de lo que acredita
 //
+//  nombre y habilidades admiten traducción: { es: '...', en: '...' }
+//
 //  Ejemplo (bórrale las // para activarlo):
 //
 //  {
@@ -27,10 +29,13 @@
 export const certificaciones = [
   // Añade aquí tus certificaciones
   {
-    nombre: 'Cursor con Python: desarrollo inteligente con IA',
+    nombre: {
+      es: 'Cursor con Python: desarrollo inteligente con IA',
+      en: 'Cursor with Python: AI-assisted development',
+    },
     emisor: 'Santander Open Academy',
     fecha: '2026-10',
     estado: 'obtenida',
-    habilidades: ['IA', 'Python','Cursor'],
+    habilidades: [{ es: 'IA', en: 'AI' }, 'Python', 'Cursor'],
     pdf: '/certificaciones/certificacionSantander.pdf',
   },]

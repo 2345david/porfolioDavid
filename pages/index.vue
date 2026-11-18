@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a class="skip" href="#trayectoria">Saltar al contenido</a>
-    <navbar :cv="perfil.cv" />
+    <a class="skip" href="#trayectoria">{{ ui('saltar') }}</a>
+    <navbar :cv="t(perfil.cv)" />
 
     <main>
       <!-- ── PORTADA ─────────────────────────────────────────── -->
@@ -10,23 +10,31 @@
           <h1 class="hero__name">
             <span class="hero__line"><span>David</span></span>
             <span class="hero__line"><span>Ramos</span></span>
-            <span class="sr-only">, {{ perfil.rol }}</span>
+            <span class="sr-only">, {{ t(perfil.rol) }}</span>
           </h1>
 
           <figure class="hero__portrait">
-            <img src="/david.png" alt="Ilustración de David programando con auriculares" width="422" height="424" />
+            <img
+              src="/david.webp"
+              srcset="/david-480.webp 480w, /david.webp 880w"
+              sizes="(max-width: 860px) 30vw, 24rem"
+              :alt="ui('retratoAlt')"
+              width="880"
+              height="1100"
+              fetchpriority="high"
+            />
           </figure>
 
           <div class="hero__body">
             <p class="hero__now">
               <span class="hero__dot" aria-hidden="true"></span>
-              <span><strong>{{ perfil.ahora.puesto }}</strong>, {{ perfil.ahora.lugar }}</span>
+              <span><strong>{{ t(perfil.ahora.puesto) }}</strong>, {{ t(perfil.ahora.lugar) }}</span>
             </p>
-            <p class="hero__intro">{{ perfil.intro }}</p>
+            <p class="hero__intro">{{ t(perfil.intro) }}</p>
 
             <div class="hero__cta">
-              <a href="#proyectos" class="btn btn--primary">Ver proyectos</a>
-              <NuxtLink to="/curriculumPage" class="btn btn--ghost">Ver currículum</NuxtLink>
+              <a href="#proyectos" class="btn btn--primary">{{ ui('verProyectos') }}</a>
+              <NuxtLink :to="ui('rutaCV')" class="btn btn--ghost">{{ ui('verCurriculum') }}</NuxtLink>
             </div>
 
             <ul class="hero__social" role="list">
@@ -50,12 +58,12 @@
 
           <dl class="hero__facts">
             <div>
-              <dt>Base</dt>
+              <dt>{{ ui('base') }}</dt>
               <dd>{{ perfil.ubicacion }}</dd>
             </div>
-            <div v-for="d in perfil.datos" :key="d.etiqueta">
-              <dt>{{ d.etiqueta }}</dt>
-              <dd>{{ d.valor }}</dd>
+            <div v-for="(d, i) in perfil.datos" :key="i">
+              <dt>{{ t(d.etiqueta) }}</dt>
+              <dd>{{ t(d.valor) }}</dd>
             </div>
           </dl>
         </div>
@@ -64,31 +72,33 @@
       <!-- ── TRAYECTORIA (git log) ───────────────────────────── -->
       <section id="trayectoria" class="section" aria-labelledby="tray-title">
         <div class="wrap">
-          <div class="section-head">
-            <h2 id="tray-title" class="section-title">Trayectoria</h2>
-            <p class="section-lead">Mi historial, contado como se lee un repositorio: lo último arriba.</p>
+          <div v-reveal class="section-head">
+            <p class="section-eyebrow">01</p>
+            <h2 id="tray-title" class="section-title">{{ ui('navTrayectoria') }}</h2>
+            <p class="section-lead">{{ ui('trayectoriaLead') }}</p>
           </div>
 
           <ol class="log" role="list">
             <li
               v-for="(t, i) in trayectoria"
               :key="i"
+              v-reveal
               class="log__item"
-              :class="['log__item--' + t.tipo, { 'is-head': t.actual }]"
+              :class="['log__item--' + t.tipo, { 'is-head': t.actual, 'log__item--neutro': t.neutro }]"
             >
               <div class="log__when">
-                <time :datetime="t.fecha">{{ fecha(t.fecha) }}</time>
-                <span v-if="t.hasta"> – {{ t.hasta === 'actualidad' ? 'hoy' : fecha(t.hasta) }}</span>
+                <time v-if="t.fecha" :datetime="t.fecha">{{ fecha(t.fecha) }}</time>
+                <span v-if="t.hasta"> – {{ t.hasta === 'actualidad' ? ui('hoy') : fecha(t.hasta) }}</span>
               </div>
               <div class="log__graph" aria-hidden="true"><span class="log__node"></span></div>
               <div class="log__body">
                 <p class="log__commit">
-                  <span class="log__type">{{ t.tipo }}:</span>
+                  <span class="log__type">{{ t.tipo }}<template v-if="t.ambito">({{ tr(t.ambito) }})</template>:</span>
                   <span v-if="t.actual" class="log__head">HEAD</span>
                 </p>
-                <h3 class="log__title">{{ t.titulo }}</h3>
-                <p class="log__place">{{ t.lugar }}</p>
-                <p v-if="t.texto" class="log__text">{{ t.texto }}</p>
+                <h3 class="log__title">{{ tr(t.titulo) }}</h3>
+                <p class="log__place">{{ tr(t.lugar) }}</p>
+                <p v-if="t.texto" class="log__text">{{ tr(t.texto) }}</p>
               </div>
             </li>
           </ol>
@@ -98,13 +108,14 @@
       <!-- ── PROYECTOS ───────────────────────────────────────── -->
       <section id="proyectos" class="section" aria-labelledby="proy-title">
         <div class="wrap">
-          <div class="section-head">
-            <h2 id="proy-title" class="section-title">Proyectos</h2>
-            <p class="section-lead">Desde una web en producción para un cliente hasta el videojuego con el que cerré el ciclo.</p>
+          <div v-reveal class="section-head">
+            <p class="section-eyebrow">02</p>
+            <h2 id="proy-title" class="section-title">{{ ui('navProyectos') }}</h2>
+            <p class="section-lead">{{ ui('proyectosLead') }}</p>
           </div>
 
           <div class="featured">
-            <article v-for="(p, i) in destacados" :key="p.titulo" class="feature" :class="{ 'feature--flip': i % 2 }">
+            <article v-for="(p, i) in destacados" :key="p.img" v-reveal class="feature" :class="{ 'feature--flip': i % 2 }">
               <a
                 class="feature__media"
                 :href="p.demo || p.codigo"
@@ -113,18 +124,19 @@
                 tabindex="-1"
                 aria-hidden="true"
               >
-                <img :src="p.img" :alt="p.alt" loading="lazy" />
+                <img :src="p.img" :srcset="srcset(p.img)" sizes="(max-width: 860px) 92vw, 40rem" :alt="t(p.alt)" loading="lazy" />
               </a>
               <div class="feature__body">
-                <p v-if="p.contexto" class="feature__context">{{ p.contexto }}</p>
-                <h3 class="feature__title">{{ p.titulo }}</h3>
-                <p class="feature__text">{{ p.resumen }}</p>
+                <p v-if="p.contexto" class="feature__context">{{ t(p.contexto) }}</p>
+                <h3 class="feature__title">{{ t(p.titulo) }}</h3>
+                <p class="feature__text">{{ t(p.resumen) }}</p>
+                <p v-if="p.aporte" class="feature__role">{{ t(p.aporte) }}</p>
                 <ul class="tags" role="list">
-                  <li v-for="s in p.stack" :key="s" class="tag">{{ s }}</li>
+                  <li v-for="(s, si) in p.stack" :key="si" class="tag">{{ t(s) }}</li>
                 </ul>
                 <div class="feature__links">
                   <a v-if="p.demo" :href="p.demo" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
-                    <UiIcon name="external" /> Ver la web
+                    <UiIcon name="external" /> {{ ui('verWeb') }}
                   </a>
                   <a
                     v-if="p.codigo"
@@ -134,26 +146,26 @@
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <UiIcon name="code" /> Ver el código
+                    <UiIcon name="code" /> {{ ui('verCodigo') }}
                   </a>
                 </div>
               </div>
             </article>
           </div>
 
-          <h3 class="minor-title">Más proyectos</h3>
+          <h3 v-reveal class="minor-title">{{ ui('masProyectos') }}</h3>
           <ul class="minor" role="list">
-            <li v-for="p in otros" :key="p.titulo" class="mini">
+            <li v-for="(p, i) in otros" :key="p.img" v-reveal="i * 90" class="mini">
               <div class="mini__media">
-                <img :src="p.img" :alt="p.alt" loading="lazy" />
+                <img :src="p.img" :srcset="srcset(p.img)" sizes="(max-width: 560px) 92vw, (max-width: 860px) 46vw, 23rem" :alt="t(p.alt)" loading="lazy" />
               </div>
               <div class="mini__body">
                 <h4 class="mini__title">
-                  <a :href="p.codigo || p.demo" target="_blank" rel="noopener noreferrer">{{ p.titulo }}</a>
+                  <a :href="p.codigo || p.demo" target="_blank" rel="noopener noreferrer">{{ t(p.titulo) }}</a>
                 </h4>
-                <p class="mini__text">{{ p.resumen }}</p>
+                <p class="mini__text">{{ t(p.resumen) }}</p>
                 <ul class="tags" role="list">
-                  <li v-for="s in p.stack" :key="s" class="tag">{{ s }}</li>
+                  <li v-for="(s, si) in p.stack" :key="si" class="tag">{{ t(s) }}</li>
                 </ul>
               </div>
             </li>
@@ -164,15 +176,28 @@
       <!-- ── STACK ───────────────────────────────────────────── -->
       <section id="stack" class="section" aria-labelledby="stack-title">
         <div class="wrap">
-          <div class="section-head">
+          <div v-reveal class="section-head">
+            <p class="section-eyebrow">03</p>
             <h2 id="stack-title" class="section-title">Stack</h2>
-            <p class="section-lead">Con lo que trabajo a diario y lo que he usado en proyectos.</p>
+            <p class="section-lead">{{ ui('stackLead') }}</p>
           </div>
           <div class="stack">
-            <div v-for="g in stack" :key="g.grupo" class="stack__group">
-              <h3 class="stack__title">{{ g.grupo }}</h3>
-              <ul role="list">
-                <li v-for="item in g.items" :key="item">{{ item }}</li>
+            <div v-for="(g, gi) in stack" :key="gi" v-reveal="gi * 70" class="stack__row">
+              <h3 class="stack__title">{{ t(g.grupo) }}</h3>
+              <ul role="list" class="stack__pills">
+                <li
+                  v-for="(item, ii) in g.items"
+                  :key="ii"
+                  class="pill"
+                  :class="{ 'pill--soft': g.blandas }"
+                  :style="icono(item) ? { '--brand': icono(item).color } : null"
+                >
+                  <svg v-if="icono(item)" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path :d="icono(item).d" />
+                  </svg>
+                  <UiIcon v-else-if="!g.blandas" name="code" />
+                  {{ t(item) }}
+                </li>
               </ul>
             </div>
           </div>
@@ -185,18 +210,17 @@
       <!-- ── CONTACTO ────────────────────────────────────────── -->
       <section id="contacto" class="section contact" aria-labelledby="contact-title">
         <div class="wrap contact__grid">
-          <div class="contact__intro">
-            <h2 id="contact-title" class="contact__title">¿Hablamos?</h2>
-            <p class="section-lead">
-              Si buscas a alguien para tu equipo o tienes un proyecto en mente, escríbeme.
-            </p>
+          <div v-reveal class="contact__intro">
+            <p class="section-eyebrow">05</p>
+            <h2 id="contact-title" class="contact__title">{{ ui('contactoTitulo') }}</h2>
+            <p class="section-lead">{{ ui('contactoLead') }}</p>
             <a class="contact__mail" :href="'mailto:' + perfil.email">
               <UiIcon name="mail" />
               <span>{{ perfil.email }}</span>
             </a>
-            <a class="link" :href="enlaces.linkedin" target="_blank" rel="noopener noreferrer">O escríbeme por LinkedIn</a>
+            <a class="link" :href="enlaces.linkedin" target="_blank" rel="noopener noreferrer">{{ ui('contactoLinkedin') }}</a>
           </div>
-          <formulary />
+          <formulary v-reveal="120" />
         </div>
       </section>
     </main>
@@ -208,11 +232,34 @@
 
 <script>
 import { perfil, enlaces, trayectoria, proyectos, stack } from '~/data/portfolio.js'
+import { iconoDe } from '~/data/iconosTec.js'
+import { datosEstructurados } from '~/data/datosEstructurados.js'
 
-const MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic']
+// Ancho original de cada captura y ancho de su versión reducida.
+const ANCHOS = {
+  '/malagatransfer.webp': 1600,
+  '/DocuchatAI.webp': 1199,
+  '/Misfinanzas.webp': 1600,
+  '/tasklist.webp': 1366,
+  '/tresEnRaya.webp': 1366,
+}
+const VARIANTES = {
+  '/malagatransfer.webp': 800,
+  '/DocuchatAI.webp': 800,
+  '/Misfinanzas.webp': 800,
+  '/tasklist.webp': 640,
+  '/tresEnRaya.webp': 640,
+}
 
 export default {
   name: 'Inicio',
+  setup() {
+    const { t, ui, fecha } = useIdioma()
+    // Datos para Google sobre quién eres (ver data/datosEstructurados.js).
+    useHead({ script: [{ type: 'application/ld+json', innerHTML: datosEstructurados() }] })
+    // En la trayectoria la variable del bucle se llama "t", así que allí se usa "tr".
+    return { t, tr: t, ui, fecha }
+  },
   data: () => ({ perfil, enlaces, trayectoria, stack }),
   computed: {
     destacados() {
@@ -223,9 +270,18 @@ export default {
     },
   },
   methods: {
-    fecha(f) {
-      const [a, m] = String(f).split('-')
-      return m ? `${MESES[Number(m) - 1]} ${a}` : a
+    // Versiones más pequeñas de las capturas para móviles (public/<nombre>-<ancho>.webp).
+    srcset(img) {
+      const v = VARIANTES[img]
+      if (!v) return null
+      return [`${img.replace('.webp', `-${v}.webp`)} ${v}w`, `${img} ${ANCHOS[img]}w`].join(', ')
+    },
+    // Icono de una tecnología del stack. Las marcas en negro usan el color del texto
+    // para que se vean también en el tema oscuro.
+    icono(item) {
+      const ic = iconoDe[typeof item === 'object' ? item.es : item]
+      if (!ic) return null
+      return { d: ic.d, color: ic.color === '#000000' ? 'var(--ink)' : ic.color }
     },
   },
 }
@@ -285,34 +341,22 @@ export default {
   position: relative;
   aspect-ratio: 4 / 5;
   border-radius: 18px;
-  background: var(--accent);
+  /* mismo azul que el fondo de la ilustración, por si tarda en cargar */
+  background: #8a9ffd;
   overflow: hidden;
-  isolation: isolate;
-}
-.hero__portrait::before {
-  /* rejilla sutil, como papel milimetrado */
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--accent-ink) 14%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--accent-ink) 14%, transparent) 1px, transparent 1px);
-  background-size: 28px 28px;
 }
 .hero__portrait img {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 112%;
-  max-width: none;
-  height: auto;
-  transform: translateX(-50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
   animation: aparecer 1s 0.25s cubic-bezier(0.2, 0.7, 0.1, 1) both;
 }
 @keyframes aparecer {
-  from { opacity: 0; transform: translate(-50%, 6%); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+  from { opacity: 0; transform: translateY(4%) scale(1.03); }
+  to { opacity: 1; transform: none; }
 }
 
 .hero__body {
@@ -449,6 +493,8 @@ export default {
   margin-bottom: 0.25rem;
 }
 .log__type { color: var(--accent); font-weight: 500; }
+.log__item--neutro .log__node { border-color: var(--muted); }
+.log__item--neutro .log__type { color: var(--muted); }
 .log__item--chore .log__type,
 .log__item--init .log__type { color: var(--muted); }
 .log__head {
@@ -520,6 +566,11 @@ export default {
   letter-spacing: -0.03em;
 }
 .feature__text { color: var(--muted); }
+.feature__role {
+  padding-left: 0.875rem;
+  border-left: 2px solid var(--accent);
+  font-size: 0.9375rem;
+}
 .feature__links { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
 
 .minor-title {
@@ -570,35 +621,51 @@ export default {
 }
 
 /* ── Stack ───────────────────────────────────────────── */
-.stack {
+.stack { border-top: 1px solid var(--ink); }
+.stack__row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-top: 1px solid var(--ink);
+  grid-template-columns: 13rem minmax(0, 1fr);
+  gap: 1rem 2rem;
+  align-items: baseline;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--line);
 }
-.stack__group { padding: 1.25rem 1.5rem 0 0; }
-.stack__group + .stack__group { padding-left: 1.5rem; border-left: 1px solid var(--line); }
 .stack__title {
   font-size: var(--step--1);
   color: var(--muted);
   font-weight: 600;
-  margin-bottom: 1rem;
 }
-.stack ul { list-style: none; padding: 0; display: grid; gap: 0.375rem; }
-.stack li {
+.stack__pills { display: flex; flex-wrap: wrap; gap: 0.625rem; list-style: none; padding: 0; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
   font-family: var(--font-display);
-  font-size: var(--step-1);
+  font-size: 1.0625rem;
   font-weight: 550;
   letter-spacing: -0.01em;
-  line-height: 1.35;
+  line-height: 1.2;
+  transition: border-color 0.2s, transform 0.2s;
 }
+.pill svg {
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentColor;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.pill svg[stroke] { fill: none; }
+.pill:hover { border-color: var(--ink); transform: translateY(-1px); }
+.pill:hover svg { color: var(--brand, var(--accent)); }
+.pill--soft { background: transparent; border-style: dashed; }
 
-@media (max-width: 860px) {
-  .stack { grid-template-columns: 1fr 1fr; row-gap: 2rem; }
-  .stack__group:nth-child(3) { padding-left: 0; border-left: 0; }
-}
-@media (max-width: 480px) {
-  .stack { grid-template-columns: 1fr; }
-  .stack__group + .stack__group { padding-left: 0; border-left: 0; }
+@media (max-width: 700px) {
+  .stack__row { grid-template-columns: 1fr; gap: 0.875rem; }
 }
 
 /* ── Contacto ────────────────────────────────────────── */

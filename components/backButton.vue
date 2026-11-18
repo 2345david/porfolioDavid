@@ -3,7 +3,7 @@
     type="button"
     class="to-top no-print"
     :class="{ 'is-visible': visible }"
-    aria-label="Volver arriba"
+    :aria-label="ui('volverArriba')"
     :tabindex="visible ? 0 : -1"
     @click="subir"
   >
@@ -14,6 +14,10 @@
 <script>
 export default {
   name: 'BackButton',
+  setup() {
+    const { ui } = useIdioma()
+    return { ui }
+  },
   data: () => ({ visible: false }),
   mounted() {
     window.addEventListener('scroll', this.comprobar, { passive: true })
