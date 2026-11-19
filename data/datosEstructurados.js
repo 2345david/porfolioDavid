@@ -9,7 +9,7 @@
 // ─────────────────────────────────────────────────────────────
 import { perfil, enlaces, stack } from './portfolio.js'
 
-export const DOMINIO = ''
+export const DOMINIO = 'https://davurg.dev'
 
 export function datosEstructurados() {
   const persona = {

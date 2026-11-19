@@ -1,4 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// Dirección oficial de la web. Si cambias de dominio, cámbiala aquí,
+// en data/datosEstructurados.js y en public/sitemap.xml y robots.txt.
+const SITIO = 'https://davurg.dev'
 const titulo = 'David Ramos · Desarrollador frontend (Vue, Nuxt) en Málaga'
 const descripcion =
   'Porfolio de David Ramos García, desarrollador de software en Babel (Málaga). Webs y apps con Vue, Nuxt y Tailwind; backend con Java, Python y SQL.'
@@ -26,7 +29,8 @@ export default defineNuxtConfig({
         { property: 'og:title', content: titulo },
         { property: 'og:description', content: descripcion },
         { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: '/og-image.jpg' },
+        { property: 'og:site_name', content: 'David Ramos' },
+        { property: 'og:image', content: SITIO + '/og-image.jpg' },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
         { property: 'og:locale', content: 'es_ES' },

@@ -4,6 +4,7 @@
 //  cambia el idioma solo para la visita actual.
 // ─────────────────────────────────────────────────────────────
 import { textos } from '~/data/textos.js'
+import { DOMINIO } from '~/data/datosEstructurados.js'
 
 const MESES = {
   es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'],
@@ -36,13 +37,21 @@ export function useIdioma() {
     idioma.value = nuevo || (idioma.value === 'es' ? 'en' : 'es')
   }
 
+  // Dirección oficial de cada página, para que Google no la cuente doble
+  // (davurg.dev y porfoliodavid.pages.dev muestran lo mismo).
+  const ruta = useRoute()
+
+  const urlOficial = () => DOMINIO + (ruta.path === '/' ? '/' : ruta.path.replace(/\/$/, ''))
+
   useHead(() => ({
     htmlAttrs: { lang: idioma.value },
+    link: [{ rel: 'canonical', href: urlOficial() }],
     title: textos[idioma.value].metaTitulo,
     meta: [
       { name: 'description', content: textos[idioma.value].metaDescripcion },
       { property: 'og:title', content: textos[idioma.value].metaTitulo },
       { property: 'og:description', content: textos[idioma.value].metaDescripcion },
+      { property: 'og:url', content: urlOficial() },
     ],
   }))
 
